@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Aura Artifacts - Discover the beauty of natural gemstone bracelets. Handcrafted with love and sustainable practices.">
+        <meta name="keywords" content="gemstone bracelets, natural stones, luxury jewelry, sustainable jewelry, handcrafted jewelry">
+        <title>Aura Artifacts | Shopping Cart</title>
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+        
+        <!-- External CSS -->
+        <link rel="stylesheet" href="styles.css">
+    </head>
+<body>
+    
+        <!-- ═══════════════════════════════════════════════════════════
+            NAVIGATION
+            ═══════════════════════════════════════════════════════════ -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">AURA ARTIFACTS</a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="collections.html" class="nav-link">Collections</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="Accessibility.html" class="nav-link">Accessibility</a></li>
+                    <li><a href="help.html" class="nav-link">Help</a></li>
+                    <li><a href="SizeGuide.html" class="nav-link">Size Guide</a></li>
+                    <li><a href="GemstoneMeanings.html" class="nav-link">Gemstone Meanings</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="admin-login-final.html" class="nav-link">Admin</a></li>
+                    <li><a href="cart.html" class="nav-link active">Cart</a></li>
+                    <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+                    <li><a href="order-confirmation.html" class="nav-link">Confirm</a></li>
+                </ul>
+            </div>
+        </nav>
+    
+        <!-- Main Content -->
+        <main class="cart-container">
+            <h1 class="text-center" style="margin-top: var(--space-xl);">Your Shopping Cart</h1>
+
+            <div class="cart-wrapper">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <table class="cart-table">
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Item 1 -->
+                        <tr>
+                            <td data-label="Product">
+                                <div class="cart-item-info">
+                                    <img src="https://plus.unsplash.com/premium_photo-1681276170598-8ad7feaf918e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="Emerald Drop Earrings"
+                                        class="cart-item-img">
+                                    <div>
+                                        <h4>The Emerald Drop</h4>
+                                        <p style="font-size: 0.85rem; color: var(--text-light);">18k Rose Gold</p>
+                                        <a href="#" style="font-size: 0.8rem; text-decoration: underline;">Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Price">$89</td>
+                            <td data-label="Quantity">1</td>
+                            <td data-label="Total">$89</td>
+                        </tr>
+                        <!-- Item 2 -->
+                        <tr>
+                            <td data-label="Product">
+                                <div class="cart-item-info">
+                                    <img src="https://plus.unsplash.com/premium_photo-1681276170008-76db5a27dee9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Luminous Pearls" class="cart-item-img">
+
+                                    <div>
+                                        <h4>Luminous Pearls</h4>
+                                        <p style="font-size: 0.85rem; color: var(--text-light);">Ivory</p>
+                                        <a href="#" style="font-size: 0.8rem; text-decoration: underline;">Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Price">$95</td>
+                            <td data-label="Quantity">1</td>
+                            <td data-label="Total">$95</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a href="collections.html" class="cart-btn cart-btn-secondary">Continue Shopping</a>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$184.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>$10.00</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>$194.00</span>
+                    </div>
+                    <br>
+                    <a href="checkout.html" class="cart-btn cart-btn-primary cart-btn-full">Proceed to Checkout</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- ═══════════════════════════════════════════════════════════
+            FOOTER
+        ═══════════════════════════════════════════════════════════ -->
+        <footer class="footer" id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>AURA ARTIFACTS</h3>
+                        <p>
+                            Handcrafted gemstone bracelets that elevate your style with natural beauty.
+                            Made with love, care, and sustainable practices.
+                        </p>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <p><a href="index.html">Home</a></p>
+                        <p><a href="collections.html">Collections</a></p>
+                        <p><a href="about.html">About Us</a></p>
+                        <p><a href="#contact">Contact</a></p>
+                        <p><a href="admin-login-final.html">Admin Portal</a></p>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Customer Care</h3>
+                        <p><a href="#">Shipping & Returns</a></p>
+                        <p><a href="#">Size Guide</a></p>
+                        <p><a href="#">Care Instructions</a></p>
+                        <p><a href="#">FAQ</a></p>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Connect With Us</h3>
+                        <p>Email: <a href="mailto:info@auraartifacts.com">info@auraartifacts.com</a></p>
+                        <p>Phone: +966 50 123 4567</p>
+                        <p>Instagram: @auraartifacts</p>
+                        <p>Follow us for daily inspiration ✨</p>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Aura</p>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>

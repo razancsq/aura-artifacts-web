@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Your Bracelet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .price-box-custom {
+            background: var(--cream); 
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            padding: 30px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .order-note-box {
+            background-color: #f4f4f4; 
+            color: #6B7280;            
+            padding: 12px 25px;
+            border-radius: 50px;       
+            display: inline-block;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid #eee;    
+        }
+
+        .preview-zone {
+            min-height: 150px;
+            background: white;
+            border: 2px dashed var(--turquoise);
+            border-radius: 20px;
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .added-charm {
+            width: 85px;
+            height: 85px;
+            margin: 5px;
+            animation: celebrate 0.5s ease;
+        }
+
+        .category-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+		
+		.highlight-word {
+            background: linear-gradient(135deg, #FFD1E0, var(--turquoise-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category-title {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .charms-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 15px;
+        }
+
+        .charm-card {
+            cursor: pointer;
+            transition: transform 0.3s;
+            padding: 10px;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .charm-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .hero-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AURA ARTIFACTS</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="BraceletCustomization.html" class="nav-link active">CUSTOMIZATION</a></li>
+				<li><a href="collections.html" class="nav-link">COLLECTIONS</a></li>
+			    <li><a href="GemstoneMeanings.html" class="nav-link">GEMSTONE MEANING</a></li>
+                <li><a href="SizeGuide.html" class="nav-link">SIZE GUIDE</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container section">
+        <div class="section-header text-center">
+            <h1 class="section-title">Design Your <span class="highlight-word">Unique</span> Bracelet</h1>
+            <p class="order-note-box">Note: You must add 18 or more charms to complete your order.</p>
+        </div>
+
+        <div class="text-center">
+            <div class="price-box-custom">
+                <h3 style="margin-bottom: 5px; font-family: var(--font-body); font-size: 1rem; color: var(--text-light);">CURRENT TOTAL</h3>
+                <div class="card-price" id="total-price" style="font-size: 3rem;">$ 30</div>
+                <p>Selected: <span id="charm-count" style="font-weight: bold; color: var(--primary);">0</span> / 10 Charms</p>
+            </div>
+        </div>
+
+        <div class="preview-zone" id="bracelet-preview">
+            <p id="placeholder-text" style="color: var(--text-light);">Your design will appear here</p>
+        </div>
+
+        <div class="hero-buttons">
+            <button class="btn-gemstone-secondary" onclick="deleteLast()">Undo</button>
+            <button class="btn-gemstone-secondary" onclick="location.reload()">Clear All</button>
+            <button id="add-to-cart-btn" class="btn-gemstone" disabled onclick="goToCart()">Add to Cart</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="all-categories-container"></div>
+    </main>
+
+    <footer class="footer" style="background-color: var(--primary); color: white; padding: 60px 0 30px 0; margin-top: 80px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; margin-bottom: 40px;">
+                <div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px; color: var(--accent);">AURA ARTIFACTS</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; color: white">Quality and precision in every bead.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;"><a href="about.html" style="color: white; text-decoration: none;">About us</a></p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px; font-size: 1.4rem; font-family: var(--font-heading); border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent); padding-bottom: 10px;">Navigation</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="index.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">HOME</a></li>
+                        <li style="margin-bottom: 10px;"><a href="BraceletCustomization.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">CUSTOMIZATION</a></li>
+						<li style="margin-bottom: 10px;"><a href="collections.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">COLLECTIONS</a></li>
+                        <li style="margin-bottom: 10px;"><a href="GemstoneMeanings.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">GEMSTONE MEANINGS</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px; font-size: 1.4rem; font-family: var(--font-heading); border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent); padding-bottom: 10px;">Pages</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="help.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">• Help / FAQ</a></li>
+                        <li style="margin-bottom: 10px;"><a href="accessibility.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">• Accessibility Info</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center;">
+                <p style="font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Aura Artifacts. Professional Project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const charmFolders = [
+            "Avengers", "BasicPlainCollection", "Black", "BlackAlphabet", 
+            "Cars", "Cherry", "Green", "InsideOut", "Months", 
+            "Pink", "PinkAlphabet", "Pinknumber", "Rednumber"
+        ];
+
+        const container = document.getElementById('all-categories-container');
+        let selectedCharms = []; 
+
+        charmFolders.forEach(folder => {
+            const section = document.createElement('section');
+            section.className = 'category-section';
+            
+            let charmsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                charmsHTML += `
+                    <article class="card charm-card" onclick="addCharm('charms/${folder}/${folder}${i}.jpg', 5)">
+                        <div class="card-image-wrapper">
+                            <img src="charms/${folder}/${folder}${i}.jpg" 
+                                 class="card-image" 
+                                 onerror="this.onerror=null; this.src='charms/${folder}/${folder}${i}.png'; this.onerror=function(){this.src='charms/${folder}/${folder}${i}.jpeg';}" 
+                                 alt="${folder} charm number ${i}">
+                        </div>
+                        <h4 class="text-center" style="font-size: 1rem; margin: 8px 0 2px 0;">${folder} ${i}</h4>
+                        <div class="card-price text-center" style="font-size: 1.2rem; color: var(--accent);">+$ 5</div>
+                    </article>
+                `;
+            }
+
+            section.innerHTML = `
+                <h3 class="category-title">${folder}</h3>
+                <div class="charms-grid">
+                    ${charmsHTML}
+                </div>
+            `;
+            container.appendChild(section);
+        });
+
+        let total = 30;
+        let count = 0;
+
+        function addCharm(imgSrc, price) {
+    const preview = document.getElementById('bracelet-preview');
+    const placeholder = document.getElementById('placeholder-text');
+    if (placeholder) placeholder.style.display = 'none';
+
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.className = 'added-charm';
+    img.dataset.price = price;
+    img.alt = "Selected charm on bracelet";
+
+    img.onerror = function() {
+        if (this.src.endsWith('.jpg')) {
+            this.src = this.src.replace('.jpg', '.jpeg');
+        } 
+        else if (this.src.endsWith('.jpeg')) {
+            this.src = this.src.replace('.jpeg', '.jpg');
+        }
+        this.onerror = null; 
+    };
+
+    preview.appendChild(img);
+    selectedCharms.push(imgSrc); 
+    total += price;
+    count++;
+    updateDisplay();
+}
+
+        function deleteLast() {
+    const preview = document.getElementById('bracelet-preview');
+    if (preview.lastElementChild && preview.lastElementChild.tagName === 'IMG') {
+        const lastImg = preview.lastElementChild;
+        total -= parseFloat(lastImg.dataset.price);
+        count--;
+        lastImg.remove();
+        selectedCharms.pop(); 
+        
+        if (count === 0) {
+            const placeholder = document.getElementById('placeholder-text');
+            if (placeholder) placeholder.style.display = 'block';
+        }
+        updateDisplay();
+    }
+}
+
+        function updateDisplay() {
+            document.getElementById('total-price').innerText = "$" + total;
+            document.getElementById('charm-count').innerText = count;
+            const btn = document.getElementById('add-to-cart-btn');
+            btn.disabled = count < 10;
+            btn.style.opacity = count < 10? "0.5" : "1";
+        }
+
+        function goToCart() {
+            const orderData = { items: selectedCharms, totalPrice: total, itemCount: count, currency: "$" };
+            localStorage.setItem('aura_cart', JSON.stringify(orderData));
+            alert('Your custom bracelet has been saved to the cart!');
+            window.location.href = "cart.html"; 
+        }
+		
+    </script>
+</body>
+</html>

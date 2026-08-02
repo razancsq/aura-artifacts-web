@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Artifacts | Order History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .member-bg { min-height: 85vh; display: flex; justify-content: center; align-items: center; padding: 60px 20px; background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%); }
+    .member-card-wide { width: 100%; max-width: 620px; text-align: center; }
+    .order-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
+    .order-table thead { background: linear-gradient(135deg, var(--primary), #1a2634); }
+    .order-table th { font-family: var(--font-button); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.9); padding: 14px 16px; text-align: left; font-weight: 600; }
+    .order-table td { padding: 14px 16px; border-bottom: 1px solid rgba(45,62,80,0.06); font-family: var(--font-body); color: var(--text-dark); }
+    .order-table tbody tr:last-child td { border-bottom: none; }
+    .order-table tbody tr:hover td { background: var(--secondary); transition: var(--transition-fast); }
+    .status-delivered { display: inline-block; padding: 4px 12px; background: rgba(76,175,80,0.1); color: #2e7d32; border-radius: 20px; font-size: 0.7rem; font-weight: 600; font-family: var(--font-button); text-transform: uppercase; }
+    .footer-section h3 { color: var(--accent); margin-bottom: var(--space-md); font-size: 1.25rem; }
+    .footer-section p, .footer-section a { color: rgba(254,254,254,0.8); font-size: 0.9375rem; line-height: 2; }
+    .footer-section a:hover { color: var(--turquoise); padding-left: 8px; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">AURA ARTIFACTS</a>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
+      <li><a href="login.html" class="nav-link active">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="member-bg">
+  <div class="card member-card-wide">
+    <span class="badge mb-md">🛍️ Orders</span>
+    <h2 class="section-title mb-sm" style="font-size:2rem;">Order History</h2>
+    <p class="section-subtitle mb-md">Your Aura Artifacts journey</p>
+
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>#AURA-9821</strong></td>
+          <td>02/2025</td>
+          <td><span class="status-delivered">✓ Delivered</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-gemstone-secondary mt-md" style="width:100%;" onclick="window.location.href='profile.html'">
+      ← Back to Profile
+    </button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section"><h3>AURA ARTIFACTS</h3><p>Handcrafted gemstone bracelets that elevate your style with natural beauty.</p></div>
+      <div class="footer-section"><h3>Quick Links</h3><p><a href="index.html">Home</a></p><p><a href="collections.html">Collections</a></p><p><a href="about.html">About Us</a></p></div>
+      <div class="footer-section"><h3>Customer Care</h3><p><a href="SizeGuide.html">Size Guide</a></p><p><a href="help.html">FAQ</a></p></div>
+      <div class="footer-section"><h3>Connect With Us</h3><p>Email: <a href="mailto:hello@auraartifacts.com">hello@auraartifacts.com</a></p><p>Instagram: @auraartifacts</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Aura Artifacts. All rights reserved. ✨</p></div>
+  </div>
+</footer>
+
+</body>
+</html>

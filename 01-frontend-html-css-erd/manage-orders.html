@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Aura Artifacts Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+            <style>
+Reuse admin layout base ── */
+        body { background: #F4F6F9; }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar (same as dashboard) */
+        .admin-sidebar {
+            background: var(--primary);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand .brand-gem { font-size: 1.6rem; }
+
+        .sidebar-brand-text .brand-name {
+            font-family: var(--font-heading);
+            color: #FFFFFF;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .sidebar-brand-text .brand-role {
+            font-family: var(--font-button);
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav { padding: 24px 0; flex: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-button);
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            padding: 0 24px 10px;
+            margin-top: 8px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.65);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav-item.active {
+            background: rgba(255,158,187,0.12);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .admin-user-info { display: flex; align-items: center; gap: 12px; }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--turquoise));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-user-info .user-name {
+            font-family: var(--font-body);
+            color: #FFFFFF;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .admin-user-info .user-role { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+        /* ── Main ── */
+        .admin-main { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .admin-topbar {
+            background: #FFFFFF;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #EBEBEB;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-title h1 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .topbar-title p { font-size: 0.8125rem; color: var(--text-light); margin: 4px 0 0; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+        .topbar-date {
+            font-family: var(--font-body);
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            padding: 8px 14px;
+            background: #F4F6F9;
+            border-radius: 8px;
+        }
+
+        /* ── Orders Content ── */
+        .orders-content { padding: 32px; flex: 1; }
+
+        /* Summary Stats Strip */
+        .orders-summary {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            border: 1px solid #F0F0F0;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-top: 3px solid transparent;
+        }
+
+        .summary-card:hover, .summary-card.active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        .summary-card.all-orders.active      { border-top-color: var(--primary); }
+        .summary-card.pending-card.active    { border-top-color: #F0B429; }
+        .summary-card.processing-card.active { border-top-color: var(--accent); }
+        .summary-card.shipped-card.active    { border-top-color: var(--turquoise); }
+        .summary-card.delivered-card.active  { border-top-color: #2EAF7D; }
+
+        .summary-card.all-orders      { border-top-color: var(--primary); }
+
+        .summary-num {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Toolbar */
+        .orders-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .toolbar-right { display: flex; align-items: center; gap: 12px; }
+
+        /* Search box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FFFFFF;
+            border: 1.5px solid #EBEBEB;
+            border-radius: 10px;
+            padding: 10px 16px;
+            transition: var(--transition-fast);
+            min-width: 280px;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.1);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .search-box input::placeholder { color: #BABABA; }
+
+        /* Status Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 6px;
+            background: #FFFFFF;
+            border: 1.5px solid #EBEBEB;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .filter-tab {
+            padding: 7px 16px;
+            border: none;
+            border-radius: 7px;
+            font-family: var(--font-button);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-light);
+            transition: var(--transition-fast);
+        }
+
+        .filter-tab:hover { background: #F8F8F8; color: var(--primary); }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+
+        /* Date & Export controls */
+        .toolbar-select {
+            padding: 10px 14px;
+            border: 1.5px solid #EBEBEB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            background: #FFFFFF;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .export-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-button);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* Orders Table Card */
+        .orders-table-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border: 1px solid #F0F0F0;
+            overflow: hidden;
+        }
+
+        .table-header-row {
+            padding: 18px 24px;
+            border-bottom: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header-row h3 {
+            font-family: var(--font-subheading);
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .table-count {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+        }
+
+        /* Main Orders Table */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table thead th {
+            padding: 12px 20px;
+            text-align: left;
+            font-family: var(--font-button);
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            background: #FAFAFA;
+            border-bottom: 1.5px solid #F0F0F0;
+            white-space: nowrap;
+        }
+
+        .orders-table thead th:first-child { padding-left: 24px; }
+        .orders-table thead th:last-child  { padding-right: 24px; }
+
+        .orders-table tbody tr {
+            border-bottom: 1px solid #F8F8F8;
+            transition: background 0.2s ease;
+        }
+
+        .orders-table tbody tr:last-child { border-bottom: none; }
+        .orders-table tbody tr:hover { background: #FAFBFF; }
+
+        .orders-table tbody td {
+            padding: 16px 20px;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            vertical-align: middle;
+        }
+
+        .orders-table tbody td:first-child { padding-left: 24px; }
+        .orders-table tbody td:last-child  { padding-right: 24px; }
+
+        /* Checkbox */
+        .row-checkbox { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+
+        .order-id-link {
+            font-family: var(--font-button);
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .order-id-link:hover { color: var(--primary); text-decoration: underline; }
+
+        .customer-info { display: flex; flex-direction: column; gap: 2px; }
+        .customer-name { font-weight: 500; color: var(--primary); }
+        .customer-email { font-size: 0.78rem; color: var(--text-light); }
+
+        .product-thumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .product-name { font-size: 0.8625rem; color: var(--text-dark); font-family: var(--font-body); font-weight: 500; }
+
+        .order-amount {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: var(--font-button);
+            white-space: nowrap;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-delivered  { background: rgba(46,175,125,0.12); color: #2EAF7D; }
+        .status-delivered::before { background: #2EAF7D; }
+
+        .status-processing { background: rgba(255,158,187,0.15); color: #D4547A; }
+        .status-processing::before { background: #D4547A; }
+
+        .status-shipped    { background: rgba(141,212,204,0.2); color: #3A9D94; }
+        .status-shipped::before { background: #3A9D94; }
+
+        .status-pending    { background: rgba(240,180,41,0.15); color: #B8860B; }
+        .status-pending::before { background: #F0B429; }
+
+        .status-cancelled  { background: rgba(224,92,92,0.12); color: #C0392B; }
+        .status-cancelled::before { background: #E05C5C; }
+
+        /* Payment badge */
+        .payment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+        }
+
+        .payment-paid { background: rgba(46,175,125,0.1); color: #2EAF7D; }
+        .payment-pending { background: rgba(240,180,41,0.15); color: #B8860B; }
+        .payment-refunded { background: rgba(224,92,92,0.1); color: #C0392B; }
+
+        /* Action Buttons */
+        .action-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: var(--font-button);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition-fast);
+            text-transform: uppercase;
+        }
+
+        .btn-view    { background: var(--secondary); color: var(--accent); }
+        .btn-view:hover { background: var(--accent); color: #FFFFFF; }
+
+        .btn-update  { background: rgba(141,212,204,0.2); color: #3A9D94; }
+        .btn-update:hover { background: var(--turquoise); color: #FFFFFF; }
+
+        .btn-cancel  { background: rgba(224,92,92,0.1); color: #C0392B; }
+        .btn-cancel:hover { background: #E05C5C; color: #FFFFFF; }
+
+        /* Status Update Modal Hint */
+        .update-status-select {
+            padding: 6px 10px;
+            border: 1.5px solid #E0E0E0;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            background: #FAFAFA;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .update-status-select:focus { border-color: var(--accent); }
+
+        /* Pagination */
+        .orders-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-top: 1px solid #F0F0F0;
+            background: #FAFAFA;
+        }
+
+        .pagination-info { font-size: 0.8125rem; color: var(--text-light); }
+
+        .pagination-controls { display: flex; gap: 6px; }
+
+        .page-btn {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
+            border: 1.5px solid #EBEBEB;
+            border-radius: 8px;
+            background: #FFFFFF;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .page-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .page-btn.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @media (max-width: 1100px) {
+            .orders-summary { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar { display: none; }
+            .orders-content { padding: 16px; }
+            .orders-summary { grid-template-columns: repeat(2, 1fr); }
+            .orders-toolbar { flex-direction: column; align-items: stretch; }
+            .search-box { min-width: 100%; }
+        }
+</style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="sidebar-brand">
+                <span class="brand-gem" aria-hidden="true">💎</span>
+                <div class="sidebar-brand-text">
+                    <span class="brand-name">Aura Artifacts</span>
+                    <span class="brand-role">Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main admin menu">
+                <p class="nav-section-label">Overview</p>
+                <a href="admin-dashboard-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📊</span> Dashboard
+                </a>
+
+                <p class="nav-section-label">Catalog</p>
+                <a href="manage-products.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">💍</span> Products
+                </a>
+                <a href="manage-stock.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📦</span> Inventory
+                </a>
+                <a href="add-product.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">➕</span> Add Product
+                </a>
+
+                <p class="nav-section-label">Sales</p>
+                <a href="manage-orders.html" class="sidebar-nav-item active" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">🛒</span> Orders
+                </a>
+                <a href="admin-customers.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">👥</span> Customers
+                </a>
+
+                <p class="nav-section-label">System</p>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">⚙️</span> Settings
+                </a>
+                                <a href="index.html" class="sidebar-nav-item" target="_blank" rel="noopener noreferrer">
+                    <span class="nav-icon" aria-hidden="true">🌐</span> View Website
+                </a>
+                <a href="admin-login-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar" aria-hidden="true">👤</div>
+                    <div>
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="main-content">
+
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1>Manage Orders</h1>
+                    <p>Track, update, and manage all customer orders</p>
+                </div>
+                <div class="topbar-actions">
+                    <span class="topbar-date" aria-label="Current date">📅 Feb 28, 2026</span>
+                </div>
+            </header>
+
+            <div class="orders-content">
+
+                <!-- Summary Cards -->
+                <section class="orders-summary" aria-label="Order status summary">
+                    <div class="summary-card all-orders active" role="button" tabindex="0" aria-pressed="true" aria-label="All orders: 1284">
+                        <span class="summary-num">1,284</span>
+                        <span class="summary-label">All Orders</span>
+                    </div>
+                    <div class="summary-card pending-card" role="button" tabindex="0" aria-pressed="false" aria-label="Pending orders: 42">
+                        <span class="summary-num" style="color:#B8860B;">42</span>
+                        <span class="summary-label">⏳ Pending</span>
+                    </div>
+                    <div class="summary-card processing-card" role="button" tabindex="0" aria-pressed="false" aria-label="Processing orders: 87">
+                        <span class="summary-num" style="color:#D4547A;">87</span>
+                        <span class="summary-label">⚙️ Processing</span>
+                    </div>
+                    <div class="summary-card shipped-card" role="button" tabindex="0" aria-pressed="false" aria-label="Shipped orders: 213">
+                        <span class="summary-num" style="color:#3A9D94;">213</span>
+                        <span class="summary-label">🚚 Shipped</span>
+                    </div>
+                    <div class="summary-card delivered-card" role="button" tabindex="0" aria-pressed="false" aria-label="Delivered orders: 942">
+                        <span class="summary-num" style="color:#2EAF7D;">942</span>
+                        <span class="summary-label">✅ Delivered</span>
+                    </div>
+                </section>
+
+                <!-- Toolbar -->
+                <div class="orders-toolbar">
+                    <div class="toolbar-left">
+                        <!-- Search -->
+                        <div class="search-box" role="search">
+                            <span aria-hidden="true">🔍</span>
+                            <input
+                                type="search"
+                                placeholder="Search by order ID, customer, or product..."
+                                aria-label="Search orders"
+                            >
+                        </div>
+
+                        <!-- Status Filter Tabs -->
+                        <div class="filter-tabs" role="group" aria-label="Filter orders by status">
+                            <button class="filter-tab active" aria-pressed="true">All</button>
+                            <button class="filter-tab" aria-pressed="false">Pending</button>
+                            <button class="filter-tab" aria-pressed="false">Processing</button>
+                            <button class="filter-tab" aria-pressed="false">Shipped</button>
+                            <button class="filter-tab" aria-pressed="false">Delivered</button>
+                            <button class="filter-tab" aria-pressed="false">Cancelled</button>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <!-- Date filter -->
+                        <select class="toolbar-select" aria-label="Filter by date range">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>Custom Range</option>
+                        </select>
+
+                        <!-- Export -->
+                        <button class="export-btn" aria-label="Export orders as CSV">
+                            <span aria-hidden="true">📥</span> Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="orders-table-card">
+                    <div class="table-header-row">
+                        <h3>Order List</h3>
+                        <span class="table-count">Showing 10 of 1,284 orders</span>
+                    </div>
+
+                    <div style="overflow-x:auto;">
+                        <table class="orders-table" aria-label="Orders management table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><input type="checkbox" aria-label="Select all orders" class="row-checkbox"></th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Payment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Update Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Order 1 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4821"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4821</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 014</span>
+                                            <span class="customer-email">sara@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">🌸</div>
+                                            <span class="product-name">Rose Quartz Bracelet</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 28, 2026</td>
+                                    <td class="order-amount">$189.00</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4821">
+                                            <option value="pending">Pending</option>
+                                            <option value="processing">Processing</option>
+                                            <option value="shipped">Shipped</option>
+                                            <option value="delivered" selected>Delivered</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4821">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 2 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4820"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4820</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 005</span>
+                                            <span class="customer-email">lina@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">💎</div>
+                                            <span class="product-name">Lapis Lazuli Bracelet</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 27, 2026</td>
+                                    <td class="order-amount">$265.00</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-shipped">Shipped</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4820">
+                                            <option value="pending">Pending</option>
+                                            <option value="processing">Processing</option>
+                                            <option value="shipped" selected>Shipped</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4820">View</button>
+                                            <button class="action-btn btn-update" aria-label="Update order AA-4820">Update</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 3 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4819"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4819</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 009</span>
+                                            <span class="customer-email">nour@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">💜</div>
+                                            <span class="product-name">Amethyst Ring</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 27, 2026</td>
+                                    <td class="order-amount">$94.50</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-processing">Processing</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4819">
+                                            <option value="pending">Pending</option>
+                                            <option value="processing" selected>Processing</option>
+                                            <option value="shipped">Shipped</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4819">View</button>
+                                            <button class="action-btn btn-update" aria-label="Update order AA-4819">Update</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 4 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4818"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4818</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 010</span>
+                                            <span class="customer-email">rana@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">✨</div>
+                                            <span class="product-name">Golden Radiance Bracelet</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 26, 2026</td>
+                                    <td class="order-amount">$342.00</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4818">
+                                            <option>Pending</option><option>Processing</option><option>Shipped</option>
+                                            <option selected>Delivered</option><option>Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4818">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 5 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4817"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4817</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 002</span>
+                                            <span class="customer-email">dina@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">🌙</div>
+                                            <span class="product-name">Moonstone Necklace</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 26, 2026</td>
+                                    <td class="order-amount">$128.00</td>
+                                    <td><span class="payment-badge payment-pending">⏳ Pending</span></td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4817">
+                                            <option selected>Pending</option><option>Processing</option>
+                                            <option>Shipped</option><option>Delivered</option><option>Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4817">View</button>
+                                            <button class="action-btn btn-cancel" aria-label="Cancel order AA-4817">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 6 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4816"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4816</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 003</span>
+                                            <span class="customer-email">hana@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">💙</div>
+                                            <span class="product-name">Blue Sapphire Ring</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 25, 2026</td>
+                                    <td class="order-amount">$215.00</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-shipped">Shipped</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4816">
+                                            <option>Pending</option><option>Processing</option>
+                                            <option selected>Shipped</option><option>Delivered</option><option>Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4816">View</button>
+                                            <button class="action-btn btn-update" aria-label="Update order AA-4816">Update</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 7 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4815"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4815</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 007</span>
+                                            <span class="customer-email">reem@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">❤️</div>
+                                            <span class="product-name">Ruby Love Bracelet</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 25, 2026</td>
+                                    <td class="order-amount">$178.50</td>
+                                    <td><span class="payment-badge payment-refunded">↩ Refunded</span></td>
+                                    <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                                    <td>
+                                        <select class="update-status-select" disabled aria-label="Order AA-4815 is cancelled">
+                                            <option selected>Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4815">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 8 -->
+                                <tr>
+                                    <td><input type="checkbox" class="row-checkbox" aria-label="Select order AA-4814"></td>
+                                    <td><a href="#" class="order-id-link">#AA-4814</a></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <span class="customer-name">Customer 011</span>
+                                            <span class="customer-email">maha@email.com</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-thumb">
+                                            <div class="product-icon" aria-hidden="true">🍃</div>
+                                            <span class="product-name">Malachite Pendant</span>
+                                        </div>
+                                    </td>
+                                    <td>Feb 24, 2026</td>
+                                    <td class="order-amount">$310.00</td>
+                                    <td><span class="payment-badge payment-paid">✓ Paid</span></td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td>
+                                        <select class="update-status-select" aria-label="Update status for order AA-4814">
+                                            <option>Pending</option><option>Processing</option><option>Shipped</option>
+                                            <option selected>Delivered</option><option>Cancelled</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="action-group">
+                                            <button class="action-btn btn-view" aria-label="View order AA-4814">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="orders-pagination">
+                        <span class="pagination-info">Showing 1–8 of 40 orders</span>
+                        <div class="pagination-controls">
+                            <button class="page-btn" disabled>&#8592;</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn">4</button>
+                            <button class="page-btn">5</button>
+                            <button class="page-btn">&#8594;</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

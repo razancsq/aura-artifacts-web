@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product - Aura Artifacts Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── Admin Layout ── */
+        body { background: #F4F6F9; }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .admin-sidebar {
+            background: var(--primary);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand .brand-gem { font-size: 1.6rem; }
+
+        .sidebar-brand-text .brand-name {
+            font-family: var(--font-heading);
+            color: #FFFFFF;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .sidebar-brand-text .brand-role {
+            font-family: var(--font-button);
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav { padding: 24px 0; flex: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-button);
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            padding: 0 24px 10px;
+            margin-top: 8px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.65);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav-item.active {
+            background: rgba(255,158,187,0.12);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .admin-user-info { display: flex; align-items: center; gap: 12px; }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--turquoise));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-user-info .user-name {
+            font-family: var(--font-body);
+            color: #FFFFFF;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .admin-user-info .user-role { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+        /* ── Main Content ── */
+        .admin-main { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .admin-topbar {
+            background: #FFFFFF;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #EAEAEA;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .topbar-title h1 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 0 0 2px;
+        }
+
+        .topbar-title p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .topbar-actions { display: flex; align-items: center; gap: 16px; }
+
+        .topbar-date {
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .btn-topbar {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-family: var(--font-button);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .btn-topbar:hover { background: var(--accent-hover); }
+
+        /* ── Page Content ── */
+        .page-content {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 28px;
+        }
+
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb-sep { color: #CCC; }
+
+        /* Form Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .form-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+        }
+
+        .form-card-title {
+            font-family: var(--font-subheading);
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #F0F0F0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required { color: var(--accent); margin-left: 2px; }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background: #FAFAFA;
+            transition: var(--transition-fast);
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--accent);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+        }
+
+        .form-textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+
+        .form-hint {
+            font-size: 0.76rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Input with prefix (price) */
+        .input-prefix-wrap {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-button);
+            font-size: 0.9rem;
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .input-prefix-wrap .form-input { padding-left: 28px; }
+
+        /* Gemstone color chips */
+        .color-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .color-chip-label {
+            cursor: pointer;
+        }
+
+        .color-chip-label input[type="checkbox"] { display: none; }
+
+        .color-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.5px solid #E5E7EB;
+            font-size: 0.8rem;
+            font-family: var(--font-button);
+            color: var(--text-dark);
+            background: #FAFAFA;
+            transition: var(--transition-fast);
+        }
+
+        .color-chip-label input:checked + .color-chip {
+            border-color: var(--accent);
+            background: var(--secondary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Size chips */
+        .size-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+        .size-chip-label { cursor: pointer; }
+        .size-chip-label input[type="checkbox"] { display: none; }
+
+        .size-chip {
+            padding: 6px 16px;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            font-size: 0.85rem;
+            font-family: var(--font-button);
+            background: #FAFAFA;
+            color: var(--text-dark);
+            transition: var(--transition-fast);
+        }
+
+        .size-chip-label input:checked + .size-chip {
+            border-color: var(--turquoise);
+            background: var(--turquoise-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Image Upload Zone */
+        .upload-zone {
+            border: 2px dashed #E5E7EB;
+            border-radius: 12px;
+            padding: 32px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            background: #FAFAFA;
+            position: relative;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--accent);
+            background: var(--secondary);
+        }
+
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-icon { font-size: 2.2rem; margin-bottom: 10px; }
+
+        .upload-zone p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .upload-zone strong { color: var(--accent); }
+
+        .upload-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .preview-thumb {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            background: #F0F0F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1.5px dashed #DDD;
+        }
+
+        /* Status Toggle */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #F5F5F5;
+        }
+
+        .toggle-row:last-child { border-bottom: none; }
+
+        .toggle-info .toggle-label {
+            font-family: var(--font-button);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .toggle-info .toggle-desc {
+            font-size: 0.76rem;
+            color: var(--text-light);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 42px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input { display: none; }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #DDD;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #FFF;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+        /* Action Buttons */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            padding-top: 8px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent), #FF7BAC);
+            color: #FFFFFF;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-family: var(--font-button);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255,158,187,0.4);
+        }
+
+        .btn-secondary {
+            padding: 13px 20px;
+            border-radius: 10px;
+            border: 1.5px solid #E5E7EB;
+            background: #FFFFFF;
+            font-family: var(--font-button);
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover { border-color: var(--primary); background: #F8F8F8; }
+
+        /* Success Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2D3E50;
+            color: #FFF;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-family: var(--font-button);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Tag input */
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 10px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            background: #FAFAFA;
+            min-height: 44px;
+            align-items: center;
+            cursor: text;
+            transition: var(--transition-fast);
+        }
+
+        .tags-wrap:focus-within {
+            border-color: var(--accent);
+            background: #FFF;
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: var(--primary);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.78rem;
+            font-family: var(--font-button);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag-remove { cursor: pointer; opacity: 0.6; font-size: 0.9rem; }
+        .tag-remove:hover { opacity: 1; }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        /* Charm selector */
+        .charm-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .charm-label { cursor: pointer; }
+        .charm-label input[type="checkbox"] { display: none; }
+
+        .charm-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 6px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            background: #FAFAFA;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .charm-label input:checked + .charm-item {
+            border-color: var(--accent);
+            background: var(--secondary);
+        }
+
+        .charm-emoji { font-size: 1.4rem; }
+        .charm-name { font-size: 0.7rem; font-family: var(--font-button); color: var(--text-light); }
+
+
+        @media (max-width: 1024px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .admin-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="sidebar-brand">
+                <span class="brand-gem" aria-hidden="true">💎</span>
+                <div class="sidebar-brand-text">
+                    <span class="brand-name">Aura Artifacts</span>
+                    <span class="brand-role">Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main admin menu">
+                <p class="nav-section-label">Overview</p>
+                <a href="admin-dashboard-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📊</span> Dashboard
+                </a>
+
+                <p class="nav-section-label">Catalog</p>
+                <a href="manage-products.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">💍</span> Products
+                </a>
+                <a href="manage-stock.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📦</span> Inventory
+                </a>
+                <a href="add-product.html" class="sidebar-nav-item active" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">➕</span> Add Product
+                </a>
+
+                <p class="nav-section-label">Sales</p>
+                <a href="manage-orders.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🛒</span> Orders
+                </a>
+                <a href="admin-customers.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">👥</span> Customers
+                </a>
+
+                <p class="nav-section-label">System</p>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">⚙️</span> Settings
+                </a>
+                <a href="index.html" class="sidebar-nav-item" target="_blank" rel="noopener noreferrer">
+                    <span class="nav-icon" aria-hidden="true">🌐</span> View Website
+                </a>
+                <a href="admin-login-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar" aria-hidden="true">👤</div>
+                    <div>
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="main-content">
+
+            <!-- Top Bar -->
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1>Add New Product</h1>
+                    <p>Fill in the details below to add a new gemstone product to the catalog</p>
+                </div>
+                <div class="topbar-actions">
+                    <span class="topbar-date" aria-label="Current date">📅 Feb 28, 2026</span>
+                    <a href="manage-products.html" class="btn-topbar">← Back to Products</a>
+                </div>
+            </header>
+
+            <div class="page-content">
+
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="admin-dashboard-final.html">Dashboard</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <a href="manage-products.html">Products</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <span>Add New Product</span>
+                </nav>
+
+                <form id="addProductForm" novalidate>
+                    <div class="form-grid">
+
+                        <!-- Left Column - Main Details -->
+                        <div>
+
+                            <!-- Basic Info -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">💍 Product Information</h2>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-name">Product Name <span class="required">*</span></label>
+                                    <input type="text" id="product-name" name="name" class="form-input" placeholder="e.g. Rose Quartz Harmony Bracelet" required aria-required="true">
+                                    <p class="form-hint">Use a clear, descriptive name that includes the gemstone type.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-desc">Description <span class="required">*</span></label>
+                                    <textarea id="product-desc" name="description" class="form-textarea" placeholder="Describe the bracelet - gemstone properties, design details, spiritual meaning..." required aria-required="true"></textarea>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="product-category">Category <span class="required">*</span></label>
+                                        <select id="product-category" name="category" class="form-select" required aria-required="true">
+                                            <option value="" disabled selected>Select category</option>
+                                            <option value="bracelet">Gemstone Bracelet</option>
+                                            <option value="charm">Charm Bracelet</option>
+                                            <option value="custom">Custom Design</option>
+                                            <option value="set">Gift Set</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="product-gemstone">Gemstone Type <span class="required">*</span></label>
+                                        <select id="product-gemstone" name="gemstone" class="form-select" required>
+                                            <option value="" disabled selected>Select gemstone</option>
+                                            <option value="rose-quartz">Rose Quartz</option>
+                                            <option value="amethyst">Amethyst</option>
+                                            <option value="turquoise">Turquoise</option>
+                                            <option value="lapis-lazuli">Lapis Lazuli</option>
+                                            <option value="moonstone">Moonstone</option>
+                                            <option value="citrine">Citrine</option>
+                                            <option value="obsidian">Obsidian</option>
+                                            <option value="jade">Jade</option>
+                                            <option value="pearl">Pearl</option>
+                                            <option value="crystal">Clear Crystal</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Available Colors</label>
+                                    <div class="color-chips" role="group" aria-label="Select available colors">
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="pink">
+                                            <span class="color-chip"><span class="color-dot" style="background:#FFB6C1"></span>Pink</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="purple">
+                                            <span class="color-chip"><span class="color-dot" style="background:#C8A2C8"></span>Purple</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="turquoise">
+                                            <span class="color-chip"><span class="color-dot" style="background:#8DD4CC"></span>Turquoise</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="white">
+                                            <span class="color-chip"><span class="color-dot" style="background:#F5F5F5;border:1px solid #DDD"></span>White</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="blue">
+                                            <span class="color-chip"><span class="color-dot" style="background:#87CEEB"></span>Blue</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="green">
+                                            <span class="color-chip"><span class="color-dot" style="background:#90EE90"></span>Green</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="gold">
+                                            <span class="color-chip"><span class="color-dot" style="background:#FFD700"></span>Gold</span>
+                                        </label>
+                                        <label class="color-chip-label">
+                                            <input type="checkbox" name="colors" value="black">
+                                            <span class="color-chip"><span class="color-dot" style="background:#2D3E50"></span>Black</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Available Sizes</label>
+                                    <div class="size-chips" role="group" aria-label="Select available bracelet sizes">
+                                        <label class="size-chip-label">
+                                            <input type="checkbox" name="sizes" value="XS">
+                                            <span class="size-chip">XS (14cm)</span>
+                                        </label>
+                                        <label class="size-chip-label">
+                                            <input type="checkbox" name="sizes" value="S">
+                                            <span class="size-chip">S (16cm)</span>
+                                        </label>
+                                        <label class="size-chip-label">
+                                            <input type="checkbox" name="sizes" value="M">
+                                            <span class="size-chip">M (18cm)</span>
+                                        </label>
+                                        <label class="size-chip-label">
+                                            <input type="checkbox" name="sizes" value="L">
+                                            <span class="size-chip">L (20cm)</span>
+                                        </label>
+                                        <label class="size-chip-label">
+                                            <input type="checkbox" name="sizes" value="XL">
+                                            <span class="size-chip">XL (22cm)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Charms -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">✨ Compatible Charms</h2>
+                                <div class="form-group">
+                                    <label class="form-label">Charms Available for This Product</label>
+                                    <div class="charm-grid" role="group" aria-label="Select compatible charms">
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="heart">
+                                            <div class="charm-item"><span class="charm-emoji">❤️</span><span class="charm-name">Heart</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="star">
+                                            <div class="charm-item"><span class="charm-emoji">⭐</span><span class="charm-name">Star</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="moon">
+                                            <div class="charm-item"><span class="charm-emoji">🌙</span><span class="charm-name">Moon</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="flower">
+                                            <div class="charm-item"><span class="charm-emoji">🌸</span><span class="charm-name">Flower</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="butterfly">
+                                            <div class="charm-item"><span class="charm-emoji">🦋</span><span class="charm-name">Butterfly</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="infinity">
+                                            <div class="charm-item"><span class="charm-emoji">∞</span><span class="charm-name">Infinity</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="crown">
+                                            <div class="charm-item"><span class="charm-emoji">👑</span><span class="charm-name">Crown</span></div>
+                                        </label>
+                                        <label class="charm-label">
+                                            <input type="checkbox" name="charms" value="letter">
+                                            <div class="charm-item"><span class="charm-emoji">🔤</span><span class="charm-name">Letter</span></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tags -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">🏷️ Tags & SEO</h2>
+                                <div class="form-group">
+                                    <label class="form-label" for="tag-input">Product Tags</label>
+                                    <div class="tags-wrap" id="tags-wrap" role="list" aria-label="Product tags">
+                                        <span class="tag" role="listitem">healing<span class="tag-remove" onclick="removeTag(this)" aria-label="Remove tag healing">×</span></span>
+                                        <span class="tag" role="listitem">gemstone<span class="tag-remove" onclick="removeTag(this)" aria-label="Remove tag gemstone">×</span></span>
+                                        <input type="text" id="tag-input" class="tag-input" placeholder="Type and press Enter..." aria-label="Add new tag">
+                                    </div>
+                                    <p class="form-hint">Press Enter to add a tag. Tags help customers find your product.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column - Pricing, Stock, Images -->
+                        <div>
+
+                            <!-- Pricing -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">💰 Pricing</h2>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-price">Unit Price (USD) <span class="required">*</span></label>
+                                    <div class="input-prefix-wrap">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" id="product-price" name="price" class="form-input" placeholder="0.00" min="0" step="0.01" required aria-required="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-compare-price">Compare-at Price (USD)</label>
+                                    <div class="input-prefix-wrap">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" id="product-compare-price" name="compare_price" class="form-input" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                    <p class="form-hint">Set higher than price to show a sale badge.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="charm-price">Charm Add-on Price (USD)</label>
+                                    <div class="input-prefix-wrap">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" id="charm-price" name="charm_price" class="form-input" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                    <p class="form-hint">Extra charge per charm added by customer.</p>
+                                </div>
+                            </div>
+
+                            <!-- Stock -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">📦 Inventory</h2>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-sku">SKU (Product ID)</label>
+                                    <input type="text" id="product-sku" name="sku" class="form-input" placeholder="e.g. AA-RQ-001">
+                                    <p class="form-hint">Leave blank to auto-generate.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="product-stock">Initial Stock Quantity <span class="required">*</span></label>
+                                    <input type="number" id="product-stock" name="stock" class="form-input" placeholder="0" min="0" required aria-required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="low-stock-threshold">Low Stock Alert Threshold</label>
+                                    <input type="number" id="low-stock-threshold" name="low_stock_threshold" class="form-input" value="5" min="0">
+                                    <p class="form-hint">Get notified when stock falls below this number.</p>
+                                </div>
+                            </div>
+
+                            <!-- Product Image -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">🖼️ Product Image</h2>
+
+                                <div class="form-group">
+                                    <label class="form-label">Upload Image <span class="required">*</span></label>
+                                    <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Click or drag to upload product image">
+                                        <input type="file" name="picture" accept="image/*" id="product-image" aria-label="Choose product image file" onchange="previewImage(event)">
+                                        <div class="upload-icon" aria-hidden="true">📷</div>
+                                        <p><strong>Click to upload</strong> or drag & drop<br>PNG, JPG, WEBP - max 5MB</p>
+                                    </div>
+                                    <p class="form-hint">Image filename will be saved in the database. Store file in <code>images/</code> directory.</p>
+                                    <div class="upload-preview" id="image-preview-grid" aria-live="polite">
+                                        <div class="preview-thumb" aria-label="Image slot 1">🖼</div>
+                                        <div class="preview-thumb" aria-label="Image slot 2">🖼</div>
+                                        <div class="preview-thumb" aria-label="Image slot 3">🖼</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Status -->
+                            <div class="form-card">
+                                <h2 class="form-card-title">⚙️ Product Settings</h2>
+
+                                <div class="toggle-row">
+                                    <div class="toggle-info">
+                                        <span class="toggle-label">Published</span>
+                                        <span class="toggle-desc">Visible to customers in the store</span>
+                                    </div>
+                                    <label class="toggle-switch" aria-label="Toggle product published status">
+                                        <input type="checkbox" name="is_published" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="toggle-row">
+                                    <div class="toggle-info">
+                                        <span class="toggle-label">Allow Customization</span>
+                                        <span class="toggle-desc">Customers can add charms & choose colors</span>
+                                    </div>
+                                    <label class="toggle-switch" aria-label="Toggle customization option">
+                                        <input type="checkbox" name="is_customizable" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="toggle-row">
+                                    <div class="toggle-info">
+                                        <span class="toggle-label">Featured Product</span>
+                                        <span class="toggle-desc">Show on homepage featured section</span>
+                                    </div>
+                                    <label class="toggle-switch" aria-label="Toggle featured product">
+                                        <input type="checkbox" name="is_featured">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="form-card">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary" onclick="submitForm(event)">➕ Add Product</button>
+                                    <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span>✅</span> <span id="toast-msg">Product added successfully!</span>
+    </div>
+
+    <script>
+        /* Tag Input */
+        document.getElementById('tag-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const val = this.value.trim();
+                if (!val) return;
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.setAttribute('role', 'listitem');
+                tag.innerHTML = val + '<span class="tag-remove" onclick="removeTag(this)" aria-label="Remove tag ' + val + '">×</span>';
+                this.parentNode.insertBefore(tag, this);
+                this.value = '';
+            }
+        });
+
+        function removeTag(el) { el.parentNode.remove(); }
+
+        /* ── Image Preview ── */
+        function previewImage(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const grid = document.getElementById('image-preview-grid');
+                const slot = grid.querySelector('.preview-thumb');
+                slot.innerHTML = '';
+                slot.style.backgroundImage = 'url(' + ev.target.result + ')';
+                slot.style.backgroundSize = 'cover';
+                slot.style.backgroundPosition = 'center';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        /* ── Form Validation (Task 13) ── */
+        function submitForm(e) {
+            e.preventDefault();
+            const errors = [];
+
+            const name = document.getElementById('product-name').value.trim();
+            const desc = document.getElementById('product-desc').value.trim();
+            const category = document.getElementById('product-category').value;
+            const gemstone = document.getElementById('product-gemstone').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const stock = parseInt(document.getElementById('product-stock').value);
+
+            if (!name) errors.push('Product name is required.');
+            if (!desc || desc.length < 10) errors.push('Please enter a description (min. 10 characters).');
+            if (!category) errors.push('Please select a category.');
+            if (!gemstone) errors.push('Please select a gemstone type.');
+            if (isNaN(price) || price <= 0) errors.push('Please enter a valid price greater than 0.');
+            if (isNaN(stock) || stock < 0) errors.push('Please enter a valid stock quantity (0 or more).');
+
+            if (errors.length > 0) {
+                showToast('⚠️ ' + errors[0], true);
+                return;
+            }
+
+            showToast('✅ Product added successfully!');
+            setTimeout(() => { window.location.href = 'manage-products.html'; }, 1800);
+        }
+
+        function resetForm() {
+            document.getElementById('addProductForm').reset();
+            showToast('🔄 Form has been reset.');
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg.replace(/^[✅⚠️🔄]\s?/, '');
+            toast.querySelector('span').textContent = msg.match(/^[✅⚠️🔄]/)?.[0] || '✅';
+            toast.style.background = isError ? '#D64545' : '#2D3E50';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+
+</body>
+</html>

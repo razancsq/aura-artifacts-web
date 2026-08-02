@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Stock - Aura Artifacts Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #F4F6F9; }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .admin-sidebar {
+            background: var(--primary);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand .brand-gem { font-size: 1.6rem; }
+
+        .sidebar-brand-text .brand-name {
+            font-family: var(--font-heading);
+            color: #FFFFFF;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .sidebar-brand-text .brand-role {
+            font-family: var(--font-button);
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav { padding: 24px 0; flex: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-button);
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            padding: 0 24px 10px;
+            margin-top: 8px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.65);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav-item.active {
+            background: rgba(255,158,187,0.12);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .admin-user-info { display: flex; align-items: center; gap: 12px; }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--turquoise));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-user-info .user-name {
+            font-family: var(--font-body);
+            color: #FFFFFF;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .admin-user-info .user-role { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+        /* ── Main ── */
+        .admin-main { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .admin-topbar {
+            background: #FFFFFF;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #EAEAEA;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .topbar-title h1 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 0 0 2px;
+        }
+
+        .topbar-title p { font-size: 0.85rem; color: var(--text-light); margin: 0; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+        .btn-export {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: 1.5px solid #E5E7EB;
+            background: #FFFFFF;
+            font-family: var(--font-button);
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+        }
+
+        .btn-export:hover { border-color: var(--primary); background: #F8F8F8; }
+
+        /* ── Page Content ── */
+        .page-content { padding: 32px; flex: 1; }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 28px;
+        }
+
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb-sep { color: #CCC; }
+
+        /* ── Stats Grid ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 22px 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-left: 4px solid transparent;
+        }
+
+        .stat-card.card-total    { border-left-color: var(--accent); }
+        .stat-card.card-ok       { border-left-color: #34D399; }
+        .stat-card.card-low      { border-left-color: #FBBF24; }
+        .stat-card.card-out      { border-left-color: #F87171; }
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .icon-pink  { background: var(--secondary); }
+        .icon-green { background: #D1FAE5; }
+        .icon-amber { background: #FEF3C7; }
+        .icon-red   { background: #FEE2E2; }
+
+        .stat-info .stat-num {
+            font-family: var(--font-heading);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-info .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+            margin-top: 3px;
+            display: block;
+        }
+
+        /* ── Alert Banner ── */
+        .alert-banner {
+            background: #FEF3C7;
+            border: 1.5px solid #FCD34D;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            font-family: var(--font-button);
+            font-size: 0.85rem;
+            color: #92400E;
+        }
+
+        .alert-banner.hidden { display: none; }
+
+        /* ── Table Toolbar ── */
+        .table-toolbar {
+            background: #FFFFFF;
+            border-radius: 14px 14px 0 0;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #F0F0F0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .search-wrap { position: relative; flex: 1; min-width: 200px; }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px 10px 36px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            outline: none;
+            background: #FAFAFA;
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            background: #FFF;
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+        }
+
+        .filter-select {
+            padding: 10px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            background: #FAFAFA;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-select:focus { border-color: var(--accent); }
+
+        /* ── Stock Table ── */
+        .table-card {
+            background: #FFFFFF;
+            border-radius: 0 0 14px 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stock-table thead {
+            background: #FAFAFA;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .stock-table th {
+            padding: 12px 16px;
+            font-family: var(--font-button);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .stock-table td {
+            padding: 14px 16px;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            vertical-align: middle;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .stock-table tr:last-child td { border-bottom: none; }
+        .stock-table tbody tr { transition: background 0.15s; }
+        .stock-table tbody tr:hover { background: #FFF5F8; }
+
+        /* Product cell */
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .product-name {
+            font-family: var(--font-body);
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.875rem;
+            display: block;
+        }
+
+        .product-sku {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+        }
+
+        /* Stock level bar */
+        .stock-level-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stock-bar-wrap {
+            width: 80px;
+            height: 6px;
+            background: #EFEFEF;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stock-bar { height: 100%; border-radius: 4px; }
+        .bar-ok   { background: linear-gradient(90deg, #34D399, #10B981); }
+        .bar-low  { background: linear-gradient(90deg, #FBBF24, #F59E0B); }
+        .bar-zero { background: linear-gradient(90deg, #F87171, #EF4444); }
+
+        .stock-count { font-size: 0.9rem; font-weight: 600; color: var(--primary); min-width: 28px; }
+
+        /* Status badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-family: var(--font-button);
+            font-weight: 600;
+        }
+
+        .badge-ok   { background: #D1FAE5; color: #065F46; }
+        .badge-low  { background: #FEF3C7; color: #92400E; }
+        .badge-out  { background: #FEE2E2; color: #991B1B; }
+
+        /* Inline stock editor */
+        .stock-editor {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stock-input {
+            width: 72px;
+            padding: 7px 10px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            text-align: center;
+            outline: none;
+            transition: var(--transition-fast);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .stock-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+        }
+
+        .btn-save-stock {
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent);
+            color: #FFF;
+            font-family: var(--font-button);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .btn-save-stock:hover { background: var(--accent-hover); }
+
+        .btn-restock {
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--turquoise);
+            background: var(--turquoise-light);
+            color: var(--primary);
+            font-family: var(--font-button);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .btn-restock:hover { background: var(--turquoise); color: #FFF; }
+
+        /* Threshold input */
+        .threshold-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .threshold-input {
+            width: 55px;
+            padding: 7px 8px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            text-align: center;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .threshold-input:focus {
+            border-color: var(--turquoise);
+            box-shadow: 0 0 0 3px rgba(141,212,204,0.2);
+        }
+
+        /* History panel */
+        .history-panel {
+            background: #FFFFFF;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+        }
+
+        .history-title {
+            font-family: var(--font-subheading);
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .history-list { display: flex; flex-direction: column; gap: 0; }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .history-item:last-child { border-bottom: none; }
+
+        .history-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-add    { background: #34D399; }
+        .dot-remove { background: #F87171; }
+        .dot-update { background: #FBBF24; }
+
+        .history-info { flex: 1; }
+
+        .history-info .hist-product {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+            display: block;
+        }
+
+        .history-info .hist-change {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .history-time {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+            white-space: nowrap;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2D3E50;
+            color: #FFF;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-family: var(--font-button);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 1024px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="sidebar-brand">
+                <span class="brand-gem" aria-hidden="true">💎</span>
+                <div class="sidebar-brand-text">
+                    <span class="brand-name">Aura Artifacts</span>
+                    <span class="brand-role">Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main admin menu">
+                <p class="nav-section-label">Overview</p>
+                <a href="admin-dashboard-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📊</span> Dashboard
+                </a>
+
+                <p class="nav-section-label">Catalog</p>
+                <a href="manage-products.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">💍</span> Products
+                </a>
+                <a href="manage-stock.html" class="sidebar-nav-item active" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">📦</span> Inventory
+                </a>
+                <a href="add-product.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">➕</span> Add Product
+                </a>
+
+                <p class="nav-section-label">Sales</p>
+                <a href="manage-orders.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🛒</span> Orders
+                </a>
+                <a href="admin-customers.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">👥</span> Customers
+                </a>
+
+                <p class="nav-section-label">System</p>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">⚙️</span> Settings
+                </a>
+                <a href="index.html" class="sidebar-nav-item" target="_blank" rel="noopener noreferrer">
+                    <span class="nav-icon" aria-hidden="true">🌐</span> View Website
+                </a>
+                <a href="admin-login-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar" aria-hidden="true">👤</div>
+                    <div>
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="main-content">
+
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1>Inventory Management</h1>
+                    <p>Monitor stock levels, update quantities, and manage low-stock alerts</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn-export" onclick="showToast('📊 Exporting stock report...')">📊 Export Report</button>
+                </div>
+            </header>
+
+            <div class="page-content">
+
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="admin-dashboard-final.html">Dashboard</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <span>Inventory</span>
+                </nav>
+
+                <!-- Low Stock Alert -->
+                <div class="alert-banner" id="alert-banner" role="alert" aria-live="polite">
+                    ⚠️ <strong>2 products</strong> are running low on stock. Review and restock to avoid stockouts.
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-row" role="region" aria-label="Inventory statistics">
+                    <div class="stat-card card-total">
+                        <div class="stat-icon icon-pink" aria-hidden="true">📦</div>
+                        <div class="stat-info">
+                            <span class="stat-num" id="total-units">98</span>
+                            <span class="stat-lbl">Total Units</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-ok">
+                        <div class="stat-icon icon-green" aria-hidden="true">✅</div>
+                        <div class="stat-info">
+                            <span class="stat-num" id="in-stock-count">5</span>
+                            <span class="stat-lbl">In Stock</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-low">
+                        <div class="stat-icon icon-amber" aria-hidden="true">⚠️</div>
+                        <div class="stat-info">
+                            <span class="stat-num" id="low-stock-count">2</span>
+                            <span class="stat-lbl">Low Stock</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-out">
+                        <div class="stat-icon icon-red" aria-hidden="true">❌</div>
+                        <div class="stat-info">
+                            <span class="stat-num" id="out-stock-count">1</span>
+                            <span class="stat-lbl">Out of Stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search + Filter -->
+                <div class="table-toolbar" role="search">
+                    <div class="search-wrap">
+                        <span class="search-icon" aria-hidden="true">🔍</span>
+                        <input type="search" class="search-input" id="search-input" placeholder="Search product name, SKU, or gemstone..." aria-label="Search inventory" oninput="filterStock()">
+                    </div>
+                    <select class="filter-select" id="filter-status" aria-label="Filter by stock status" onchange="filterStock()">
+                        <option value="">All Status</option>
+                        <option value="ok">In Stock</option>
+                        <option value="low">Low Stock</option>
+                        <option value="out">Out of Stock</option>
+                    </select>
+                </div>
+
+                <!-- Stock Table -->
+                <div class="table-card" role="region" aria-label="Inventory table">
+                    <table class="stock-table" aria-label="Stock levels">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Gemstone</th>
+                                <th>Stock Level</th>
+                                <th>Status</th>
+                                <th>Alert Threshold</th>
+                                <th>Update Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock-tbody">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Stock History Log -->
+                <div class="history-panel" role="region" aria-label="Recent stock activity">
+                    <h2 class="history-title">🕐 Recent Stock Activity</h2>
+                    <div class="history-list" id="history-list">
+                        <div class="history-item">
+                            <div class="history-dot dot-add" aria-hidden="true"></div>
+                            <div class="history-info">
+                                <span class="hist-product">Rose Quartz Harmony Bracelet</span>
+                                <span class="hist-change">Stock updated: 28 → 32 (+4 units restocked)</span>
+                            </div>
+                            <span class="history-time">2 hours ago</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-dot dot-remove" aria-hidden="true"></div>
+                            <div class="history-info">
+                                <span class="hist-product">Lapis Lazuli Ocean Bracelet</span>
+                                <span class="hist-change">Stock updated: 3 → 0 (order fulfilled - out of stock)</span>
+                            </div>
+                            <span class="history-time">5 hours ago</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-dot dot-update" aria-hidden="true"></div>
+                            <div class="history-info">
+                                <span class="hist-product">Turquoise Dream Bracelet</span>
+                                <span class="hist-change">Low stock alert triggered - 4 units remaining</span>
+                            </div>
+                            <span class="history-time">Yesterday, 3:40 PM</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-dot dot-add" aria-hidden="true"></div>
+                            <div class="history-info">
+                                <span class="hist-product">Amethyst Serenity Bracelet</span>
+                                <span class="hist-change">Stock updated: 10 → 18 (+8 units restocked)</span>
+                            </div>
+                            <span class="history-time">Yesterday, 11:15 AM</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-dot dot-remove" aria-hidden="true"></div>
+                            <div class="history-info">
+                                <span class="hist-product">Citrine Sunshine Set</span>
+                                <span class="hist-change">Stock updated: 9 → 3 (6 units sold via orders)</span>
+                            </div>
+                            <span class="history-time">2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span id="toast-icon">✅</span>
+        <span id="toast-msg">Stock updated!</span>
+    </div>
+
+    <script>
+        /* Product stock data (would be fetched from PHP/MySQL in real implementation) */
+        const stockData = [
+            { id: 1, name: 'Rose Quartz Harmony Bracelet', sku: 'AA-RQ-001', gemstone: 'Rose Quartz', stock: 32, threshold: 5,  emoji: '💗' },
+            { id: 2, name: 'Amethyst Serenity Bracelet',   sku: 'AA-AM-002', gemstone: 'Amethyst',    stock: 18, threshold: 5,  emoji: '💜' },
+            { id: 3, name: 'Turquoise Dream Bracelet',      sku: 'AA-TQ-003', gemstone: 'Turquoise',   stock: 4,  threshold: 5,  emoji: '🩵' },
+            { id: 4, name: 'Moonstone Glow Bracelet',       sku: 'AA-MS-004', gemstone: 'Moonstone',   stock: 11, threshold: 5,  emoji: '🌙' },
+            { id: 5, name: 'Lapis Lazuli Ocean Bracelet',   sku: 'AA-LL-005', gemstone: 'Lapis Lazuli',stock: 0,  threshold: 5,  emoji: '🫐' },
+            { id: 6, name: 'Citrine Sunshine Set',          sku: 'AA-CT-006', gemstone: 'Citrine',     stock: 3,  threshold: 5,  emoji: '🌟' },
+            { id: 7, name: 'Obsidian Shield Bracelet',      sku: 'AA-OB-007', gemstone: 'Obsidian',    stock: 22, threshold: 5,  emoji: '🖤' },
+            { id: 8, name: 'Pearl Elegance Charm Bracelet', sku: 'AA-PL-008', gemstone: 'Pearl',       stock: 8,  threshold: 5,  emoji: '🤍' },
+        ];
+
+        function getStockStatus(stock, threshold) {
+            if (stock === 0) return 'out';
+            if (stock <= threshold) return 'low';
+            return 'ok';
+        }
+
+        function getBarClass(status) {
+            return { ok: 'bar-ok', low: 'bar-low', out: 'bar-zero' }[status];
+        }
+
+        function getBadge(status) {
+            const map = {
+                ok:  '<span class="badge badge-ok">✅ In Stock</span>',
+                low: '<span class="badge badge-low">⚠️ Low Stock</span>',
+                out: '<span class="badge badge-out">❌ Out of Stock</span>',
+            };
+            return map[status];
+        }
+
+        function getBarWidth(stock) { return Math.min(100, (stock / 40) * 100); }
+
+        function renderStock(data) {
+            const tbody = document.getElementById('stock-tbody');
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-light);font-family:var(--font-body);">No products match your search.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = data.map(p => {
+                const status = getStockStatus(p.stock, p.threshold);
+                return `
+                <tr id="stock-row-${p.id}">
+                    <td>
+                        <div class="product-cell">
+                            <div class="product-thumb" aria-hidden="true">${p.emoji}</div>
+                            <div>
+                                <span class="product-name">${p.name}</span>
+                                <span class="product-sku">${p.sku}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-size:0.82rem;color:var(--text-light);">💎 ${p.gemstone}</td>
+                    <td>
+                        <div class="stock-level-wrap">
+                            <div class="stock-bar-wrap" role="progressbar" aria-valuenow="${p.stock}" aria-valuemin="0" aria-valuemax="40" aria-label="${p.stock} units">
+                                <div class="stock-bar ${getBarClass(status)}" style="width:${getBarWidth(p.stock)}%"></div>
+                            </div>
+                            <span class="stock-count" id="stock-display-${p.id}">${p.stock}</span>
+                        </div>
+                    </td>
+                    <td id="badge-cell-${p.id}">${getBadge(status)}</td>
+                    <td>
+                        <div class="threshold-wrap">
+                            <input type="number" class="threshold-input" id="threshold-${p.id}" value="${p.threshold}" min="0" aria-label="Alert threshold for ${p.name}" onchange="saveThreshold(${p.id})">
+                            <span style="font-size:0.72rem;color:var(--text-light);">units</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="stock-editor">
+                            <input type="number" class="stock-input" id="new-stock-${p.id}" value="${p.stock}" min="0" aria-label="New stock quantity for ${p.name}">
+                            <button class="btn-save-stock" onclick="updateStock(${p.id})" aria-label="Save stock for ${p.name}">Save</button>
+                            <button class="btn-restock" onclick="restockProduct(${p.id})" aria-label="Restock ${p.name}">+50</button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        /* ── Update stock (Task 10, Task 13 validation) ── */
+        function updateStock(id) {
+            const input = document.getElementById('new-stock-' + id);
+            const val   = parseInt(input.value);
+
+            // JS Validation (Task 13)
+            if (isNaN(val) || val < 0) {
+                showToast('⚠️ Please enter a valid quantity (0 or more).', true);
+                input.focus();
+                return;
+            }
+
+            const product = stockData.find(p => p.id === id);
+            if (!product) return;
+
+            const old = product.stock;
+            product.stock = val;
+
+            // Update display
+            document.getElementById('stock-display-' + id).textContent = val;
+            const bar = document.querySelector('#stock-row-' + id + ' .stock-bar');
+            const status = getStockStatus(val, product.threshold);
+            bar.className = 'stock-bar ' + getBarClass(status);
+            bar.style.width = getBarWidth(val) + '%';
+            bar.setAttribute('aria-valuenow', val);
+            document.getElementById('badge-cell-' + id).innerHTML = getBadge(status);
+
+            // Add to history
+            addHistory(product.name, old, val);
+            updateStats();
+            showToast('✅ Stock updated for ' + product.name);
+        }
+
+        function restockProduct(id) {
+            const product = stockData.find(p => p.id === id);
+            if (!product) return;
+            const newVal = product.stock + 50;
+            document.getElementById('new-stock-' + id).value = newVal;
+            updateStock(id);
+        }
+
+        function saveThreshold(id) {
+            const val = parseInt(document.getElementById('threshold-' + id).value);
+            if (isNaN(val) || val < 0) {
+                showToast('⚠️ Threshold must be 0 or more.', true);
+                return;
+            }
+            const product = stockData.find(p => p.id === id);
+            if (product) {
+                product.threshold = val;
+                showToast('🔔 Alert threshold updated for ' + product.name);
+            }
+        }
+
+        function addHistory(name, oldVal, newVal) {
+            const list = document.getElementById('history-list');
+            const diff = newVal - oldVal;
+            const dotClass = diff > 0 ? 'dot-add' : (diff < 0 ? 'dot-remove' : 'dot-update');
+            const changeText = diff > 0
+                ? `Stock updated: ${oldVal} → ${newVal} (+${diff} units restocked)`
+                : diff < 0
+                    ? `Stock updated: ${oldVal} → ${newVal} (${diff} units removed)`
+                    : `Stock unchanged: ${newVal} units`;
+
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = `
+                <div class="history-dot ${dotClass}" aria-hidden="true"></div>
+                <div class="history-info">
+                    <span class="hist-product">${name}</span>
+                    <span class="hist-change">${changeText}</span>
+                </div>
+                <span class="history-time">Just now</span>
+            `;
+            list.insertBefore(item, list.firstChild);
+        }
+
+        function updateStats() {
+            const total = stockData.reduce((s, p) => s + p.stock, 0);
+            const inStock = stockData.filter(p => getStockStatus(p.stock, p.threshold) === 'ok').length;
+            const low     = stockData.filter(p => getStockStatus(p.stock, p.threshold) === 'low').length;
+            const out     = stockData.filter(p => getStockStatus(p.stock, p.threshold) === 'out').length;
+
+            document.getElementById('total-units').textContent    = total;
+            document.getElementById('in-stock-count').textContent  = inStock;
+            document.getElementById('low-stock-count').textContent = low;
+            document.getElementById('out-stock-count').textContent = out;
+
+            const banner = document.getElementById('alert-banner');
+            if (low + out === 0) {
+                banner.classList.add('hidden');
+            } else {
+                banner.classList.remove('hidden');
+                banner.innerHTML = `⚠️ <strong>${low + out} product${low + out > 1 ? 's' : ''}</strong> need attention - ${low} low stock, ${out} out of stock.`;
+            }
+        }
+
+        function filterStock() {
+            const q      = document.getElementById('search-input').value.toLowerCase();
+            const status = document.getElementById('filter-status').value;
+
+            const filtered = stockData.filter(p => {
+                const matchQ = p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.gemstone.toLowerCase().includes(q);
+                const matchS = !status || getStockStatus(p.stock, p.threshold) === status;
+                return matchQ && matchS;
+            });
+
+            renderStock(filtered);
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            const icon  = msg.match(/^[✅⚠️🔔📊]/)?.[0] || '✅';
+            document.getElementById('toast-icon').textContent = icon;
+            document.getElementById('toast-msg').textContent  = msg.replace(/^[✅⚠️🔔📊]\s?/, '');
+            toast.style.background = isError ? '#D64545' : '#2D3E50';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Init
+        renderStock(stockData);
+        updateStats();
+    </script>
+
+</body>
+</html>

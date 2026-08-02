@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - Aura Artifacts Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+<style>
+Admin Layout (shared) ── */
+body { background: #F4F6F9; }
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.admin-sidebar {
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 28px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-brand .brand-gem { font-size: 1.6rem; }
+
+.sidebar-brand-text .brand-name {
+    font-family: var(--font-heading);
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    display: block;
+}
+
+.sidebar-brand-text .brand-role {
+    font-family: var(--font-button);
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.sidebar-nav { padding: 24px 0; flex: 1; }
+
+.nav-section-label {
+    font-family: var(--font-button);
+    font-size: 0.65rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    padding: 0 24px 10px;
+    margin-top: 8px;
+}
+
+.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: rgba(255,255,255,0.65);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition-fast);
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav-item:hover {
+    background: rgba(255,255,255,0.06);
+    color: #FFFFFF;
+    border-left-color: var(--accent);
+}
+
+.sidebar-nav-item.active {
+    background: rgba(255,158,187,0.12);
+    color: #FFFFFF;
+    border-left-color: var(--accent);
+    font-weight: 500;
+}
+
+.nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+.sidebar-footer {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.admin-user-info { display: flex; align-items: center; gap: 12px; }
+
+.admin-avatar {
+    width: 36px; height: 36px;
+    background: rgba(255,158,187,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+}
+
+.user-name {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    display: block;
+}
+
+.user-role {
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-family: var(--font-button);
+    letter-spacing: 1px;
+}
+
+/* ── Main ── */
+.admin-main { padding: 32px; overflow-y: auto; }
+
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.page-desc { color: var(--text-light); font-size: 0.9rem; }
+
+.date-badge {
+    background: #FFFFFF;
+    border: 1px solid #E8EDF2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-family: var(--font-button);
+    font-weight: 600;
+}
+
+/* ── Summary Cards ── */
+.customers-summary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 3px solid var(--card-color);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.summary-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+.summary-icon { font-size: 1.5rem; }
+
+.summary-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.summary-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-family: var(--font-button);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* ── Toolbar ── */
+.customers-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.search-input {
+    padding: 10px 16px 10px 40px;
+    border: 1.5px solid #E8E8E8;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    width: 320px;
+    background: #FFFFFF;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,158,187,0.12);
+}
+
+.filter-select {
+    padding: 10px 14px;
+    border: 1.5px solid #E8E8E8;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    background: #FFFFFF;
+    color: var(--primary);
+    cursor: pointer;
+    outline: none;
+}
+
+.export-btn {
+    padding: 10px 18px;
+    background: var(--primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-button);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.export-btn:hover { background: var(--accent); }
+
+/* ── Table ── */
+.table-container {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.customers-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.customers-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-family: var(--font-button);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: #FAFBFC;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.customers-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #F5F7FA;
+    font-size: 0.875rem;
+    color: var(--primary);
+    vertical-align: middle;
+}
+
+.customers-table tbody tr:hover { background: #FAFBFC; }
+.customers-table tbody tr:last-child td { border-bottom: none; }
+
+.customer-info { display: flex; align-items: center; gap: 12px; }
+
+.customer-avatar {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent), var(--turquoise));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    flex-shrink: 0;
+}
+
+.customer-name { display: block; font-weight: 600; color: var(--primary); }
+.customer-id { display: block; font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+
+.order-count {
+    background: #F4F6F9;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-button);
+    white-space: nowrap;
+}
+
+.status-vip      { background: #FFF8E1; color: #B8860B; }
+.status-active   { background: #E8F5E9; color: #2EAF7D; }
+.status-inactive { background: #FFF3E0; color: #E07B3A; }
+
+/* Action Buttons */
+.action-btns { display: flex; gap: 6px; }
+
+.btn-view, .btn-edit, .btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: var(--font-button);
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.btn-view   { background: #EEF2FF; color: #4F46E5; }
+.btn-edit   { background: #E0F5F3; color: #3A9D94; }
+.btn-delete { background: #FEE2E2; color: #DC2626; }
+
+.btn-view:hover   { background: #4F46E5; color: #FFFFFF; }
+.btn-edit:hover   { background: #3A9D94; color: #FFFFFF; }
+.btn-delete:hover { background: #DC2626; color: #FFFFFF; }
+
+/* ── Pagination ── */
+.pagination-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pagination-info { font-size: 0.875rem; color: var(--text-light); }
+
+.pagination-controls { display: flex; align-items: center; gap: 6px; }
+
+.page-btn {
+    padding: 8px 14px;
+    border: 1.5px solid #E8EDF2;
+    border-radius: 8px;
+    background: #FFFFFF;
+    font-size: 0.85rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-family: var(--font-button);
+}
+
+.page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.page-btn.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-ellipsis { color: var(--text-light); padding: 0 4px; }
+
+@media (max-width: 768px) {
+    .admin-layout { grid-template-columns: 1fr; }
+    .admin-sidebar { display: none; }
+    .admin-main { padding: 16px; }
+    .customers-summary { grid-template-columns: repeat(2, 1fr); }
+    .search-input { width: 100%; }
+}
+</style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="sidebar-brand">
+                <span class="brand-gem" aria-hidden="true">💎</span>
+                <div class="sidebar-brand-text">
+                    <span class="brand-name">Aura Artifacts</span>
+                    <span class="brand-role">Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main admin menu">
+                <p class="nav-section-label">Overview</p>
+                <a href="admin-dashboard-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📊</span> Dashboard
+                </a>
+
+                <p class="nav-section-label">Catalog</p>
+                <a href="manage-products.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">💍</span> Products
+                </a>
+                <a href="manage-stock.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📦</span> Inventory
+                </a>
+                <a href="add-product.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">➕</span> Add Product
+                </a>
+
+                <p class="nav-section-label">Sales</p>
+                <a href="manage-orders.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🛒</span> Orders
+                </a>
+                <a href="admin-customers.html" class="sidebar-nav-item active" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">👥</span> Customers
+                </a>
+
+                <p class="nav-section-label">System</p>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">⚙️</span> Settings
+                </a>
+                                <a href="index.html" class="sidebar-nav-item" target="_blank" rel="noopener noreferrer">
+                    <span class="nav-icon" aria-hidden="true">🌐</span> View Website
+                </a>
+                <a href="admin-login-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar" aria-hidden="true">👤</div>
+                    <div>
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="main-content">
+
+            <!-- Top Bar -->
+            <div class="admin-topbar">
+                <div class="topbar-left">
+                    <h1 class="page-title">Customer Management</h1>
+                    <p class="page-desc">View and manage all registered customers</p>
+                </div>
+                <div class="topbar-right">
+                    <span class="date-badge">👥 3,741 Total Customers</span>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="customers-summary">
+                <div class="summary-card" style="--card-color: #2D3E50;">
+                    <div class="summary-icon">👥</div>
+                    <div class="summary-info">
+                        <span class="summary-number">3,741</span>
+                        <span class="summary-label">Total Customers</span>
+                    </div>
+                </div>
+                <div class="summary-card" style="--card-color: #2EAF7D;">
+                    <div class="summary-icon">✅</div>
+                    <div class="summary-info">
+                        <span class="summary-number">3,512</span>
+                        <span class="summary-label">Active</span>
+                    </div>
+                </div>
+                <div class="summary-card" style="--card-color: #FF9EBB;">
+                    <div class="summary-icon">🆕</div>
+                    <div class="summary-info">
+                        <span class="summary-number">148</span>
+                        <span class="summary-label">New This Month</span>
+                    </div>
+                </div>
+                <div class="summary-card" style="--card-color: #8DD4CC;">
+                    <div class="summary-icon">💎</div>
+                    <div class="summary-info">
+                        <span class="summary-number">229</span>
+                        <span class="summary-label">VIP Customers</span>
+                    </div>
+                </div>
+                <div class="summary-card" style="--card-color: #E07B3A;">
+                    <div class="summary-icon">⚠️</div>
+                    <div class="summary-info">
+                        <span class="summary-number">81</span>
+                        <span class="summary-label">Inactive</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="customers-toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="search" placeholder="Search by name, email, or phone..." aria-label="Search customers" class="search-input">
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <select class="filter-select" aria-label="Filter by status">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                    <select class="filter-select" aria-label="Sort by">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="orders">Most Orders</option>
+                        <option value="spent">Highest Spent</option>
+                    </select>
+                    <button class="export-btn" aria-label="Export CSV">📥 Export CSV</button>
+                </div>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="table-container">
+                <table class="customers-table" aria-label="Customers list">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input type="checkbox" aria-label="Select all"></th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Join Date</th>
+                            <th scope="col">Orders</th>
+                            <th scope="col">Total Spent</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">SA</div>
+                                    <div>
+                                        <span class="customer-name">Customer 013</span>
+                                        <span class="customer-id">#CUS-001</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>sara@email.com</td>
+                            <td>+966 50 123 4567</td>
+                            <td>Jan 12, 2025</td>
+                            <td><span class="order-count">14</span></td>
+                            <td><strong>$4,820</strong></td>
+                            <td><span class="status-badge status-vip">💎 VIP</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 013">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 013">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 013">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">LM</div>
+                                    <div>
+                                        <span class="customer-name">Customer 004</span>
+                                        <span class="customer-id">#CUS-002</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>lina@email.com</td>
+                            <td>+966 55 234 5678</td>
+                            <td>Feb 3, 2025</td>
+                            <td><span class="order-count">8</span></td>
+                            <td><strong>$2,150</strong></td>
+                            <td><span class="status-badge status-active">✅ Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 004">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 004">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 004">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">NA</div>
+                                    <div>
+                                        <span class="customer-name">Customer 008</span>
+                                        <span class="customer-id">#CUS-003</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>nour@email.com</td>
+                            <td>+966 54 345 6789</td>
+                            <td>Mar 18, 2025</td>
+                            <td><span class="order-count">3</span></td>
+                            <td><strong>$780</strong></td>
+                            <td><span class="status-badge status-active">✅ Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 008">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 008">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 008">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">RA</div>
+                                    <div>
+                                        <span class="customer-name">Customer 012</span>
+                                        <span class="customer-id">#CUS-004</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>rana@email.com</td>
+                            <td>+966 56 456 7890</td>
+                            <td>Apr 5, 2025</td>
+                            <td><span class="order-count">21</span></td>
+                            <td><strong>$7,340</strong></td>
+                            <td><span class="status-badge status-vip">💎 VIP</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 012">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 012">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 012">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">DA</div>
+                                    <div>
+                                        <span class="customer-name">Customer 001</span>
+                                        <span class="customer-id">#CUS-005</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>dina@email.com</td>
+                            <td>+966 58 567 8901</td>
+                            <td>Jan 28, 2025</td>
+                            <td><span class="order-count">0</span></td>
+                            <td><strong>$0</strong></td>
+                            <td><span class="status-badge status-inactive">⚠️ Inactive</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 001">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 001">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 001">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" aria-label="Select customer"></td>
+                            <td>
+                                <div class="customer-info">
+                                    <div class="customer-avatar">MA</div>
+                                    <div>
+                                        <span class="customer-name">Customer 006</span>
+                                        <span class="customer-id">#CUS-006</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>maha@email.com</td>
+                            <td>+966 59 678 9012</td>
+                            <td>Feb 14, 2025</td>
+                            <td><span class="order-count">6</span></td>
+                            <td><strong>$1,590</strong></td>
+                            <td><span class="status-badge status-active">✅ Active</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" aria-label="View Customer 006">👁 View</button>
+                                    <button class="btn-edit" aria-label="Edit Customer 006">✏️ Edit</button>
+                                    <button class="btn-delete" aria-label="Delete Customer 006">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+                        <div class="pagination-bar">
+                <span class="pagination-info">Showing 1–6 of 30 customers</span>
+                <div class="pagination-controls">
+                    <button class="page-btn" disabled>&#8592;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn">5</button>
+                    <button class="page-btn">&#8594;</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

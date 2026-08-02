@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Artifacts | Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .member-bg { min-height: 85vh; display: flex; justify-content: center; align-items: center; padding: 60px 20px; background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%); }
+    .member-card { width: 100%; max-width: 440px; text-align: center; }
+    .member-input { width: 100%; padding: 14px 18px; margin-bottom: 14px; border: 1.5px solid rgba(45,62,80,0.1); border-radius: 12px; background: var(--cream); font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-dark); box-sizing: border-box; transition: var(--transition-fast); display: block; }
+    .member-input:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(255,158,187,0.15); }
+    .member-input::placeholder { color: #b8c0cc; }
+    .input-label { display: block; text-align: left; font-family: var(--font-button); font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 5px; font-weight: 600; }
+    .footer-section h3 { color: var(--accent); margin-bottom: var(--space-md); font-size: 1.25rem; }
+    .footer-section p, .footer-section a { color: rgba(254,254,254,0.8); font-size: 0.9375rem; line-height: 2; }
+    .footer-section a:hover { color: var(--turquoise); padding-left: 8px; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">AURA ARTIFACTS</a>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
+      <li><a href="login.html" class="nav-link active">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="member-bg">
+  <div class="card member-card">
+    <span class="badge mb-md">💎 Member Area</span>
+    <h2 class="section-title mb-sm" style="font-size:2rem;">Sign In</h2>
+    <p class="section-subtitle mb-md">Welcome back to Aura Artifacts</p>
+
+    <label class="input-label">Email Address</label>
+    <input id="emailInput" class="member-input" type="email" placeholder="your@email.com">
+
+    <label class="input-label">Password</label>
+    <input id="passInput" class="member-input" type="password" placeholder="••••••••">
+
+    <p id="loginError" style="color:#e53935; font-size:0.82rem; margin-bottom:10px; display:none;"></p>
+
+    <button class="btn-gemstone" id="loginBtn" style="width:100%;" onclick="handleLogin()">Sign In</button>
+
+    <p class="mt-sm" style="text-align:right; font-size:0.82rem;">
+      <a href="forgot-password.html" class="text-accent">Forgot password?</a>
+    </p>
+
+    <p class="mt-md" style="font-size:0.875rem; color:var(--text-light);">
+      Don't have an account?
+      <a href="register.html" class="text-accent" style="font-weight:600;">Create one</a>
+    </p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section"><h3>AURA ARTIFACTS</h3><p>Handcrafted gemstone bracelets that elevate your style with natural beauty.</p></div>
+      <div class="footer-section"><h3>Quick Links</h3><p><a href="index.html">Home</a></p><p><a href="collections.html">Collections</a></p><p><a href="about.html">About Us</a></p></div>
+      <div class="footer-section"><h3>Customer Care</h3><p><a href="SizeGuide.html">Size Guide</a></p><p><a href="help.html">FAQ</a></p></div>
+      <div class="footer-section"><h3>Connect With Us</h3><p>Email: <a href="mailto:hello@auraartifacts.com">hello@auraartifacts.com</a></p><p>Instagram: @auraartifacts</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Aura Artifacts. All rights reserved. ✨</p></div>
+  </div>
+</footer>
+
+<script>
+  const VALID_EMAIL = 'demo@aura.com';
+  const VALID_PASS  = 'demo1234';
+
+  function handleLogin() {
+    const email = document.getElementById('emailInput').value.trim();
+    const pass  = document.getElementById('passInput').value.trim();
+    const error = document.getElementById('loginError');
+    const btn   = document.getElementById('loginBtn');
+
+    if (!email || !pass) {
+      error.textContent = '⚠️ Please fill in all fields.';
+      error.style.display = 'block'; return;
+    }
+    if (email !== VALID_EMAIL || pass !== VALID_PASS) {
+      error.textContent = '✗ Incorrect email or password.';
+      error.style.display = 'block'; return;
+    }
+
+    error.style.display = 'none';
+    btn.textContent = 'Signing in...';
+    btn.style.opacity = '0.75';
+    btn.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      window.location.href = 'profile.html';
+    }, 1000);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+
+</body>
+</html>

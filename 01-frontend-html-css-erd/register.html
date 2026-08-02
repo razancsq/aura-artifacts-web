@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Artifacts | Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .member-bg {
+      min-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%);
+    }
+
+    .member-card { width: 100%; max-width: 480px; text-align: center; }
+
+    .member-input {
+      width: 100%;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      border: 1.5px solid rgba(45,62,80,0.1);
+      border-radius: 12px;
+      background: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      box-sizing: border-box;
+      transition: var(--transition-fast);
+      display: block;
+    }
+    .member-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+    }
+    .member-input::placeholder { color: #b8c0cc; }
+
+    .input-label {
+      display: block;
+      text-align: left;
+      font-family: var(--font-button);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .error-msg {
+      color: #e53935;
+      font-size: 0.82rem;
+      margin-bottom: 10px;
+      display: none;
+      text-align: left;
+    }
+
+    .success-msg {
+      color: #2e7d32;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      display: none;
+      text-align: center;
+      background: rgba(76,175,80,0.08);
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">AURA ARTIFACTS</a>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
+      <li><a href="user.html" class="nav-link">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="member-bg">
+  <div class="card member-card">
+
+    <span class="badge mb-md">✨ Join Aura</span>
+    <h2 class="section-title mb-sm" style="font-size:2rem;">Create Account</h2>
+    <p class="section-subtitle mb-md">Start your gemstone journey</p>
+
+    <div id="successMsg" class="success-msg">
+      ✓ Account created! <a href="user.html" class="text-accent" style="font-weight:600;">Sign in now</a>
+    </div>
+
+    <label class="input-label">Full Name</label>
+    <input id="regName" class="member-input" type="text" placeholder="Your full name">
+
+    <label class="input-label">Email Address</label>
+    <input id="regEmail" class="member-input" type="email" placeholder="your@email.com">
+
+    <label class="input-label">Password</label>
+    <input id="regPass" class="member-input" type="password" placeholder="At least 6 characters">
+
+    <label class="input-label">Confirm Password</label>
+    <input id="regConfirm" class="member-input" type="password" placeholder="Repeat your password">
+
+    <p id="regError" class="error-msg"></p>
+
+    <button class="btn-gemstone" id="registerBtn" style="width:100%;" onclick="handleRegister()">
+      Create Account
+    </button>
+
+    <p class="mt-md" style="font-size:0.875rem; color:var(--text-light);">
+      Already have an account?
+      <a href="user.html" class="text-accent" style="font-weight:600;">Sign In</a>
+    </p>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Aura Artifacts. All rights reserved. Crafted with love and gemstone magic ✨</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function handleRegister() {
+    const name    = document.getElementById('regName').value.trim();
+    const email   = document.getElementById('regEmail').value.trim();
+    const pass    = document.getElementById('regPass').value.trim();
+    const confirm = document.getElementById('regConfirm').value.trim();
+    const error   = document.getElementById('regError');
+    const success = document.getElementById('successMsg');
+    const btn     = document.getElementById('registerBtn');
+
+    error.style.display = 'none';
+    success.style.display = 'none';
+
+    if (!name || !email || !pass || !confirm) {
+      error.textContent = '⚠️ Please fill in all fields.';
+      error.style.display = 'block';
+      return;
+    }
+
+    if (pass.length < 6) {
+      error.textContent = '⚠️ Password must be at least 6 characters.';
+      error.style.display = 'block';
+      return;
+    }
+
+    if (pass !== confirm) {
+      error.textContent = '✗ Passwords do not match.';
+      error.style.display = 'block';
+      return;
+    }
+
+    btn.textContent = 'Creating account...';
+    btn.style.opacity = '0.75';
+    btn.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      btn.textContent = 'Create Account';
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      success.style.display = 'block';
+    }, 1000);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleRegister();
+  });
+</script>
+
+</body>
+</html>

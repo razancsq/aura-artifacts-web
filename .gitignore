@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+build/
+dist/
+bin/
+out/
+target/
+
+# Compiled files
+*.class
+*.o
+*.pyc
+__pycache__/
+
+# Environment and secrets
+.env
+.env.local
+*.env
+config.local.php
+database.local.php
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.iml
+.nbproject/
+.settings/
+.project
+.classpath
+*.suo
+*.user
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

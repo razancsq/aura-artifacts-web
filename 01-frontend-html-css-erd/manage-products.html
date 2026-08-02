@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - Aura Artifacts Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #F4F6F9; }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar (same as all admin pages) ── */
+        .admin-sidebar {
+            background: var(--primary);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand .brand-gem { font-size: 1.6rem; }
+
+        .sidebar-brand-text .brand-name {
+            font-family: var(--font-heading);
+            color: #FFFFFF;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .sidebar-brand-text .brand-role {
+            font-family: var(--font-button);
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav { padding: 24px 0; flex: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-button);
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            padding: 0 24px 10px;
+            margin-top: 8px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.65);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav-item.active {
+            background: rgba(255,158,187,0.12);
+            color: #FFFFFF;
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .admin-user-info { display: flex; align-items: center; gap: 12px; }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--turquoise));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-user-info .user-name {
+            font-family: var(--font-body);
+            color: #FFFFFF;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .admin-user-info .user-role { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+        /* ── Main ── */
+        .admin-main { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .admin-topbar {
+            background: #FFFFFF;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #EAEAEA;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .topbar-title h1 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 0 0 2px;
+        }
+
+        .topbar-title p { font-size: 0.85rem; color: var(--text-light); margin: 0; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+        .btn-add {
+            background: linear-gradient(135deg, var(--accent), #FF7BAC);
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: var(--font-button);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,158,187,0.35); }
+
+        /* ── Page Content ── */
+        .page-content { padding: 32px; flex: 1; }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 28px;
+        }
+
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb-sep { color: #CCC; }
+
+        /* ── Stats Row ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .mini-stat {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 20px 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .mini-stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .icon-pink { background: var(--secondary); }
+        .icon-turquoise { background: var(--turquoise-light); }
+        .icon-yellow { background: var(--butter-yellow); }
+        .icon-cream { background: var(--cream); }
+
+        .mini-stat-info .stat-num {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+        }
+
+        .mini-stat-info .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+        }
+
+        /* ── Toolbar ── */
+        .table-toolbar {
+            background: #FFFFFF;
+            border-radius: 14px 14px 0 0;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #F0F0F0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px 10px 36px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            outline: none;
+            background: #FAFAFA;
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            background: #FFF;
+            box-shadow: 0 0 0 3px rgba(255,158,187,0.15);
+        }
+
+        .filter-select {
+            padding: 10px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            background: #FAFAFA;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-select:focus { border-color: var(--accent); }
+
+        /* ── Table ── */
+        .table-card {
+            background: #FFFFFF;
+            border-radius: 0 0 14px 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table thead {
+            background: #FAFAFA;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .products-table th {
+            padding: 12px 16px;
+            font-family: var(--font-button);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .products-table td {
+            padding: 14px 16px;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            vertical-align: middle;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .products-table tr:last-child td { border-bottom: none; }
+
+        .products-table tbody tr {
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+
+        .products-table tbody tr:hover { background: #FFF5F8; }
+
+        /* Product cell */
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-thumb {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-family: var(--font-body);
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.875rem;
+            display: block;
+        }
+
+        .product-sku {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            font-family: var(--font-button);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-family: var(--font-button);
+            font-weight: 600;
+        }
+
+        .badge-active { background: #D1FAE5; color: #065F46; }
+        .badge-draft  { background: #FEF3C7; color: #92400E; }
+        .badge-out    { background: #FEE2E2; color: #991B1B; }
+        .badge-featured { background: var(--secondary); color: var(--primary); }
+
+        /* Gemstone pill */
+        .gemstone-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            background: var(--turquoise-light);
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-family: var(--font-button);
+            color: var(--primary);
+        }
+
+        /* Stock indicator */
+        .stock-cell { display: flex; align-items: center; gap: 8px; }
+
+        .stock-bar-wrap {
+            width: 60px;
+            height: 5px;
+            background: #EFEFEF;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .stock-bar { height: 100%; border-radius: 3px; }
+        .stock-ok   { background: #34D399; }
+        .stock-low  { background: #FBBF24; }
+        .stock-zero { background: #F87171; }
+
+        .stock-num {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 24px;
+        }
+
+        /* Action buttons */
+        .action-btns { display: flex; gap: 6px; }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            background: #FAFAFA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .btn-icon:hover { background: #FFF; border-color: var(--accent); transform: scale(1.05); }
+        .btn-icon.delete:hover { background: #FEE2E2; border-color: #F87171; }
+
+        /* Checkbox column */
+        .check-cell input[type="checkbox"] { cursor: pointer; width: 16px; height: 16px; accent-color: var(--accent); }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 22px;
+            background: #FFFFFF;
+            border-radius: 0 0 14px 14px;
+            border-top: 1px solid #F0F0F0;
+        }
+
+        .page-info { font-size: 0.8rem; color: var(--text-light); font-family: var(--font-button); }
+
+        .page-btns { display: flex; gap: 6px; }
+
+        .page-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            background: #FAFAFA;
+            font-family: var(--font-button);
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            color: var(--text-dark);
+        }
+
+        .page-btn:hover { border-color: var(--accent); background: var(--secondary); }
+        .page-btn.active { background: var(--accent); color: #FFF; border-color: var(--accent); }
+
+        /* Delete Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+        .modal-box {
+            background: #FFF;
+            border-radius: 18px;
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.25s;
+        }
+
+        .modal-overlay.open .modal-box { transform: scale(1); }
+
+        .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
+        .modal-title { font-family: var(--font-subheading); font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
+        .modal-desc { font-size: 0.875rem; color: var(--text-light); margin-bottom: 24px; }
+
+        .modal-btns { display: flex; gap: 10px; justify-content: center; }
+
+        .btn-danger {
+            background: #EF4444;
+            color: #FFF;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 10px;
+            font-family: var(--font-button);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .btn-danger:hover { background: #DC2626; }
+
+        .btn-cancel {
+            padding: 11px 24px;
+            border-radius: 10px;
+            border: 1.5px solid #E5E7EB;
+            background: #FFF;
+            font-family: var(--font-button);
+            font-size: 0.875rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .btn-cancel:hover { border-color: var(--primary); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2D3E50;
+            color: #FFF;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-family: var(--font-button);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 1024px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="sidebar-brand">
+                <span class="brand-gem" aria-hidden="true">💎</span>
+                <div class="sidebar-brand-text">
+                    <span class="brand-name">Aura Artifacts</span>
+                    <span class="brand-role">Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Main admin menu">
+                <p class="nav-section-label">Overview</p>
+                <a href="admin-dashboard-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📊</span> Dashboard
+                </a>
+
+                <p class="nav-section-label">Catalog</p>
+                <a href="manage-products.html" class="sidebar-nav-item active" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">💍</span> Products
+                </a>
+                <a href="manage-stock.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">📦</span> Inventory
+                </a>
+                <a href="add-product.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">➕</span> Add Product
+                </a>
+
+                <p class="nav-section-label">Sales</p>
+                <a href="manage-orders.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🛒</span> Orders
+                </a>
+                <a href="admin-customers.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">👥</span> Customers
+                </a>
+
+                <p class="nav-section-label">System</p>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">⚙️</span> Settings
+                </a>
+                <a href="index.html" class="sidebar-nav-item" target="_blank" rel="noopener noreferrer">
+                    <span class="nav-icon" aria-hidden="true">🌐</span> View Website
+                </a>
+                <a href="admin-login-final.html" class="sidebar-nav-item">
+                    <span class="nav-icon" aria-hidden="true">🚪</span> Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar" aria-hidden="true">👤</div>
+                    <div>
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="admin-main" id="main-content">
+
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1>Manage Products</h1>
+                    <p>View, edit, search and delete your gemstone catalog</p>
+                </div>
+                <div class="topbar-actions">
+                    <a href="add-product.html" class="btn-add">➕ Add New Product</a>
+                </div>
+            </header>
+
+            <div class="page-content">
+
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="admin-dashboard-final.html">Dashboard</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <span>Products</span>
+                </nav>
+
+                <!-- Stats -->
+                <div class="stats-row" role="region" aria-label="Product statistics">
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon icon-pink" aria-hidden="true">💍</div>
+                        <div class="mini-stat-info">
+                            <span class="stat-num" id="total-count">8</span>
+                            <span class="stat-lbl">Total Products</span>
+                        </div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon icon-turquoise" aria-hidden="true">✅</div>
+                        <div class="mini-stat-info">
+                            <span class="stat-num" id="active-count">6</span>
+                            <span class="stat-lbl">Active</span>
+                        </div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon icon-yellow" aria-hidden="true">⚠️</div>
+                        <div class="mini-stat-info">
+                            <span class="stat-num" id="low-count">2</span>
+                            <span class="stat-lbl">Low Stock</span>
+                        </div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon icon-cream" aria-hidden="true">📝</div>
+                        <div class="mini-stat-info">
+                            <span class="stat-num" id="draft-count">1</span>
+                            <span class="stat-lbl">Drafts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toolbar + Table -->
+                <div class="table-toolbar" role="search">
+                    <div class="search-wrap">
+                        <span class="search-icon" aria-hidden="true">🔍</span>
+                        <input type="search" class="search-input" id="search-input" placeholder="Search by name, SKU, or gemstone..." aria-label="Search products" oninput="filterProducts()">
+                    </div>
+                    <select class="filter-select" id="filter-category" aria-label="Filter by category" onchange="filterProducts()">
+                        <option value="">All Categories</option>
+                        <option value="Gemstone Bracelet">Gemstone Bracelet</option>
+                        <option value="Charm Bracelet">Charm Bracelet</option>
+                        <option value="Custom Design">Custom Design</option>
+                        <option value="Gift Set">Gift Set</option>
+                    </select>
+                    <select class="filter-select" id="filter-status" aria-label="Filter by status" onchange="filterProducts()">
+                        <option value="">All Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Out of Stock">Out of Stock</option>
+                    </select>
+                </div>
+
+                <div class="table-card" role="region" aria-label="Products table">
+                    <table class="products-table" aria-label="Products list">
+                        <thead>
+                            <tr>
+                                <th class="check-cell"><input type="checkbox" id="select-all" aria-label="Select all products" onchange="toggleAll(this)"></th>
+                                <th>Product</th>
+                                <th>Gemstone</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" role="navigation" aria-label="Table pagination">
+                    <span class="page-info" id="page-info">Showing 1–8 of 8 products</span>
+                    <div class="page-btns">
+                        <button class="page-btn" aria-label="Previous page" disabled>‹</button>
+                        <button class="page-btn active" aria-current="page">1</button>
+                        <button class="page-btn" aria-label="Page 2">2</button>
+                        <button class="page-btn" aria-label="Next page">›</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-box">
+            <div class="modal-icon" aria-hidden="true">🗑️</div>
+            <h2 class="modal-title" id="modal-title">Delete Product?</h2>
+            <p class="modal-desc" id="modal-desc">This action cannot be undone. The product will be permanently removed from the database.</p>
+            <div class="modal-btns">
+                <button class="btn-danger" id="confirm-delete-btn" onclick="confirmDelete()">Yes, Delete</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span id="toast-icon">✅</span>
+        <span id="toast-msg">Done!</span>
+    </div>
+
+    <script>
+        /* Sample product data (would come from PHP/DB in real implementation) */
+        const products = [
+            { id: 1, name: 'Rose Quartz Harmony Bracelet', sku: 'AA-RQ-001', gemstone: 'Rose Quartz', category: 'Gemstone Bracelet', price: 149, stock: 32, status: 'Active', featured: true,  emoji: '💗' },
+            { id: 2, name: 'Amethyst Serenity Bracelet',   sku: 'AA-AM-002', gemstone: 'Amethyst',    category: 'Gemstone Bracelet', price: 189, stock: 18, status: 'Active', featured: false, emoji: '💜' },
+            { id: 3, name: 'Turquoise Dream Bracelet',      sku: 'AA-TQ-003', gemstone: 'Turquoise',   category: 'Charm Bracelet',    price: 129, stock: 4,  status: 'Active', featured: false, emoji: '🩵' },
+            { id: 4, name: 'Moonstone Glow Bracelet',       sku: 'AA-MS-004', gemstone: 'Moonstone',   category: 'Custom Design',     price: 219, stock: 11, status: 'Active', featured: true,  emoji: '🌙' },
+            { id: 5, name: 'Lapis Lazuli Ocean Bracelet',   sku: 'AA-LL-005', gemstone: 'Lapis Lazuli',category: 'Gemstone Bracelet', price: 169, stock: 0,  status: 'Out of Stock', featured: false, emoji: '🫐' },
+            { id: 6, name: 'Citrine Sunshine Set',          sku: 'AA-CT-006', gemstone: 'Citrine',     category: 'Gift Set',          price: 249, stock: 3,  status: 'Active', featured: false, emoji: '🌟' },
+            { id: 7, name: 'Obsidian Shield Bracelet',      sku: 'AA-OB-007', gemstone: 'Obsidian',    category: 'Gemstone Bracelet', price: 139, stock: 22, status: 'Draft',  featured: false, emoji: '🖤' },
+            { id: 8, name: 'Pearl Elegance Charm Bracelet', sku: 'AA-PL-008', gemstone: 'Pearl',       category: 'Charm Bracelet',    price: 199, stock: 8,  status: 'Active', featured: true,  emoji: '🤍' },
+        ];
+
+        let deleteTargetId = null;
+        let filteredProducts = [...products];
+
+        function getStockClass(stock) {
+            if (stock === 0) return 'stock-zero';
+            if (stock <= 5)  return 'stock-low';
+            return 'stock-ok';
+        }
+
+        function getStockWidth(stock) {
+            return Math.min(100, (stock / 40) * 100);
+        }
+
+        function getStatusBadge(status) {
+            const map = { 'Active': 'badge-active', 'Draft': 'badge-draft', 'Out of Stock': 'badge-out' };
+            return `<span class="badge ${map[status] || ''}">${status}</span>`;
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('products-tbody');
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-light);font-family:var(--font-body);">No products found matching your search.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = data.map(p => `
+                <tr id="row-${p.id}" onclick="rowClick(event, ${p.id})">
+                    <td class="check-cell"><input type="checkbox" aria-label="Select ${p.name}" onclick="event.stopPropagation()"></td>
+                    <td>
+                        <div class="product-cell">
+                            <div class="product-thumb" aria-hidden="true">${p.emoji}</div>
+                            <div>
+                                <span class="product-name">${p.name}${p.featured ? ' <span class="badge badge-featured" style="font-size:0.65rem;padding:2px 7px;margin-left:5px;">⭐ Featured</span>' : ''}</span>
+                                <span class="product-sku">${p.sku}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="gemstone-pill">💎 ${p.gemstone}</span></td>
+                    <td style="font-size:0.82rem;color:var(--text-light);">${p.category}</td>
+                    <td style="font-weight:600;color:var(--primary);">$ ${p.price}</td>
+                    <td>
+                        <div class="stock-cell">
+                            <div class="stock-bar-wrap" role="progressbar" aria-valuenow="${p.stock}" aria-valuemin="0" aria-valuemax="40" aria-label="${p.stock} units in stock">
+                                <div class="stock-bar ${getStockClass(p.stock)}" style="width:${getStockWidth(p.stock)}%"></div>
+                            </div>
+                            <span class="stock-num">${p.stock}</span>
+                        </div>
+                    </td>
+                    <td>${getStatusBadge(p.status)}</td>
+                    <td>
+                        <div class="action-btns" onclick="event.stopPropagation()">
+                            <button class="btn-icon" onclick="editProduct(${p.id})" title="Edit product" aria-label="Edit ${p.name}">✏️</button>
+                            <a href="manage-stock.html" class="btn-icon" title="Manage stock" aria-label="Manage stock for ${p.name}">📦</a>
+                            <button class="btn-icon delete" onclick="openDeleteModal(${p.id}, '${p.name}')" title="Delete product" aria-label="Delete ${p.name}">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterProducts() {
+            const q       = document.getElementById('search-input').value.toLowerCase();
+            const cat     = document.getElementById('filter-category').value;
+            const status  = document.getElementById('filter-status').value;
+
+            filteredProducts = products.filter(p =>
+                (p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.gemstone.toLowerCase().includes(q)) &&
+                (!cat    || p.category === cat) &&
+                (!status || p.status   === status)
+            );
+
+            renderTable(filteredProducts);
+            document.getElementById('page-info').textContent = `Showing 1–${filteredProducts.length} of ${filteredProducts.length} products`;
+        }
+
+        function rowClick(e, id) { /* could navigate to edit page */ }
+
+        function editProduct(id) {
+            showToast('✏️ Edit product ' + id + ' - (connects to edit page with PHP)');
+        }
+
+        function toggleAll(cb) {
+            document.querySelectorAll('#products-tbody input[type="checkbox"]').forEach(c => c.checked = cb.checked);
+        }
+
+        function openDeleteModal(id, name) {
+            deleteTargetId = id;
+            document.getElementById('modal-desc').textContent = `You are about to delete "${name}". This cannot be undone and will remove it from the database.`;
+            document.getElementById('delete-modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('delete-modal').classList.remove('open');
+            deleteTargetId = null;
+        }
+
+        function confirmDelete() {
+            if (!deleteTargetId) return;
+            const idx = products.findIndex(p => p.id === deleteTargetId);
+            if (idx !== -1) products.splice(idx, 1);
+            closeModal();
+            filterProducts();
+            document.getElementById('total-count').textContent = products.length;
+            showToast('🗑️ Product deleted successfully.');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const icon  = msg.match(/^[✅✏️🗑️⚠️]/)?.[0] || '✅';
+            document.getElementById('toast-icon').textContent = icon;
+            document.getElementById('toast-msg').textContent  = msg.replace(/^[✅✏️🗑️⚠️]\s?/, '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('delete-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initial render
+        renderTable(products);
+    </script>
+
+</body>
+</html>

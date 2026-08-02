@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bracelet Size Guide</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        
+        .guide-main-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            margin-top: 50px;
+            align-items: start;
+        }
+
+        .steps-container {
+            text-align: left;
+        }
+
+        .step-card {
+            background: #ffffff;
+            border: 1px solid var(--cream);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 20px;
+            transition: 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .step-circle {
+            background: var(--primary);
+            color: white;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-content h3 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .chart-wrapper {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 20px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .size-table caption {
+            padding: 15px;
+            font-family: var(--font-heading);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .size-table th, .size-table td {
+            padding: 18px;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .size-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+            font-family: var(--font-body);
+        }
+
+        .tip-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--accent);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+		
+		.highlight-word {
+            background: linear-gradient(135deg, #FFD1E0, var(--turquoise-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 992px) {
+            .guide-main-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AURA ARTIFACTS</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="collections.html" class="nav-link">COLLECTIONS</a></li>
+                <li><a href="about.html" class="nav-link">ABOUT US</a></li>
+                <li><a href="Accessibility.html" class="nav-link">ACCESSIBILITY</a></li>
+                <li><a href="help.html" class="nav-link">HELP</a></li>
+                <li><a href="SizeGuide.html" class="nav-link active">SIZE GUIDE</a></li>
+                <li><a href="GemstoneMeanings.html" class="nav-link">GEMSTONE MEANING</a></li>
+                <li><a href="#contact" class="nav-link">CONTACT</a></li>
+                <li><a href="admin-login-final.html" class="nav-link">ADMIN</a></li>
+                <li><a href="cart.html" class="nav-link">CART</a></li>
+                <li><a href="checkout.html" class="nav-link">CHECKOUT</a></li>
+                <li><a href="order-confirmation.html" class="nav-link">CONFIRM</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container section">
+        <header class="section-header text-center">
+            <h1 class="section-title">Measure Your <span class="highlight-word">Wrist</span></h1>
+            <p>Accuracy is the key to elegance. Follow our professional guide below.</p>
+        </header>
+
+        <div class="guide-main-layout">
+            
+            <section class="steps-container">
+                <article class="step-card">
+                    <div class="step-circle">1</div>
+                    <div class="step-content">
+                        <h3>Identify the Spot</h3>
+                        <p>Locate the area just below your wrist bone where you typically wear a bracelet.</p>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-circle">2</div>
+                    <div class="step-content">
+                        <h3>Wrap & Mark</h3>
+                        <p>Use a measuring tape or string. Wrap it comfortably around your wrist and mark the intersection.</p>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-circle">3</div>
+                    <div class="step-content">
+                        <h3>Check the Ruler</h3>
+                        <p>Lay the string flat against a ruler. The length in centimeters is your wrist size.</p>
+                    </div>
+                </article>
+
+            </section>
+
+            <aside class="chart-wrapper text-center">
+                <h2 style="font-family: var(--font-heading); color: var(--primary); margin-bottom: 20px;">Size Guide</h2>
+                
+                <table class="size-table">
+                    <caption>Bracelet and Wrist Size Comparison</caption>
+                    <thead>
+                        <tr>
+                            <th>Wrist (cm)</th>
+                            <th>Recommended</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>14 - 15 cm</td>
+                            <td>Small (17 cm)</td>
+                        </tr>
+                        <tr>
+                            <td>16 - 17 cm</td>
+                            <td>Medium (19 cm)</td>
+                        </tr>
+                        <tr>
+                            <td>18 - 19 cm</td>
+                            <td>Large (21 cm)</td>
+                        </tr>
+                        <tr>
+                            <td>20 - 21 cm</td>
+                            <td>X-Large (23 cm)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer class="footer" style="background-color: var(--primary); color: white; padding: 60px 0 30px 0; margin-top: 80px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; margin-bottom: 40px;">
+                <div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px; color: var(--accent);">AURA ARTIFACTS</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; color: white">Quality and precision in every bead.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;"><a href="about.html" style="color: white; text-decoration: none;">About us</a></p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px; font-size: 1.4rem; font-family: var(--font-heading); border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent); padding-bottom: 10px;">Navigation</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="index.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">HOME</a></li>
+                        <li style="margin-bottom: 10px;"><a href="BraceletCustomization.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">CUSTOMIZATION</a></li>
+						<li style="margin-bottom: 10px;"><a href="collections.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">COLLECTIONS</a></li>
+                        <li style="margin-bottom: 10px;"><a href="GemstoneMeanings.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">GEMSTONE MEANINGS</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px; font-size: 1.4rem; font-family: var(--font-heading); border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent); padding-bottom: 10px;">Pages</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="help.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">• Help / FAQ</a></li>
+                        <li style="margin-bottom: 10px;"><a href="accessibility.html" style="color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8;">• Accessibility Info</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center;">
+                <p style="font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Aura Artifacts. Professional Project.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

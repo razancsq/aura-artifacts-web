@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Artifacts | My Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .member-bg { min-height: 85vh; display: flex; justify-content: center; align-items: center; padding: 60px 20px; background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%); }
+    .member-card { width: 100%; max-width: 440px; text-align: center; }
+    .avatar { width: 88px; height: 88px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--turquoise)); display: flex; align-items: center; justify-content: center; font-size: 38px; margin: 0 auto 12px; box-shadow: 0 8px 24px rgba(255,158,187,0.35); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid rgba(45,62,80,0.06); font-size: 0.9rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { font-family: var(--font-button); font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); font-weight: 600; }
+    .info-val { font-weight: 500; color: var(--primary); }
+    .btn-stack { display: flex; flex-direction: column; gap: 12px; }
+    .footer-section h3 { color: var(--accent); margin-bottom: var(--space-md); font-size: 1.25rem; }
+    .footer-section p, .footer-section a { color: rgba(254,254,254,0.8); font-size: 0.9375rem; line-height: 2; }
+    .footer-section a:hover { color: var(--turquoise); padding-left: 8px; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">AURA ARTIFACTS</a>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="cart.html" class="nav-link">Cart</a></li>
+      <li><a href="login.html" class="nav-link active">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="member-bg">
+  <div class="card member-card">
+    <div class="avatar">👤</div>
+    <span class="badge mb-sm">✦ Gold Member</span>
+    <h2 class="section-title mb-sm" style="font-size:2rem;">My Profile</h2>
+
+    <div class="divider"></div>
+    <div class="info-row"><span class="info-key">Name</span><span class="info-val">Jane Smith</span></div>
+    <div class="info-row"><span class="info-key">ID</span><span class="info-val">1000000001</span></div>
+    <div class="info-row"><span class="info-key">Member Since</span><span class="info-val">Jan 2024</span></div>
+    <div class="info-row"><span class="info-key">Total Orders</span><span class="info-val text-accent" style="font-weight:700;">1 Order</span></div>
+    <div class="divider"></div>
+
+    <div class="btn-stack">
+      <button class="btn-gemstone" style="width:100%;" onclick="window.location.href='order-history.html'">View Order History</button>
+      <button class="btn-gemstone-secondary" style="width:100%;" onclick="window.location.href='login.html'">Logout</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section"><h3>AURA ARTIFACTS</h3><p>Handcrafted gemstone bracelets that elevate your style with natural beauty.</p></div>
+      <div class="footer-section"><h3>Quick Links</h3><p><a href="index.html">Home</a></p><p><a href="collections.html">Collections</a></p><p><a href="about.html">About Us</a></p></div>
+      <div class="footer-section"><h3>Customer Care</h3><p><a href="SizeGuide.html">Size Guide</a></p><p><a href="help.html">FAQ</a></p></div>
+      <div class="footer-section"><h3>Connect With Us</h3><p>Email: <a href="mailto:hello@auraartifacts.com">hello@auraartifacts.com</a></p><p>Instagram: @auraartifacts</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Aura Artifacts. All rights reserved. ✨</p></div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our exquisite collection of handcrafted gemstone bracelets. Each piece is unique and carries healing energy.">
+    <title>Collections | Aura Artifacts</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AURA ARTIFACTS</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="collections.html" class="nav-link active">Collections</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="Accessibility.html" class="nav-link">Accessibility</a></li>
+                <li><a href="help.html" class="nav-link">Help</a></li>
+                <li><a href="SizeGuide.html" class="nav-link">Size Guide</a></li>
+                <li><a href="GemstoneMeanings.html" class="nav-link">Gemstone Meanings</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="admin-login-final.html" class="nav-link">Admin</a></li>
+                <li><a href="cart.html" class="nav-link">Cart</a></li>
+                <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+                <li><a href="order-confirmation.html" class="nav-link">Confirm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Collections Header -->
+    <section class="collections-header">
+        <div class="container">
+            <h1>Our Gemstone Collections</h1>
+            <p>
+                Discover bracelets crafted with intention, infused with healing energy, 
+                and designed to complement your unique journey.
+            </p>
+        </div>
+    </section>
+
+    <!-- Gemstone Discovery -->
+    <section class="gemstone-discovery">
+        <div class="container">
+            <div class="discovery-header">
+                <h2>Discover Your Perfect Gemstone</h2>
+                <p>Explore the natural beauty and unique colors of our gemstones</p>
+            </div>
+
+            <div class="discovery-content">
+                <!-- Quiz Box - في الأعلى -->
+                <div class="quiz-box">
+                    <!-- Initial State: Start Button -->
+                    <div id="quiz-start" class="quiz-start">
+                        <h3 class="quiz-title">Find Your Perfect Gemstone</h3>
+                        <p class="quiz-subtitle">
+                            What's your mood today? Discover which gemstone matches your energy
+                        </p>
+                        <button class="quiz-start-btn" onclick="document.getElementById('quiz-start').style.display='none'; document.getElementById('quiz-questions').style.display='block';">
+                            Start Quiz
+                        </button>
+                    </div>
+
+                    <!-- Quiz Questions -->
+                    <div id="quiz-questions" class="quiz-questions" style="display: none;">
+                        <h3 class="quiz-title">What's Your Mood?</h3>
+                        <p class="quiz-subtitle">Choose the mood that matches how you feel right now</p>
+
+                        <input type="radio" id="happy" name="mood" value="happy" onchange="showResult('happy')" style="display: none;">
+                        <input type="radio" id="excited" name="mood" value="excited" onchange="showResult('excited')" style="display: none;">
+                        <input type="radio" id="surprised" name="mood" value="surprised" onchange="showResult('surprised')" style="display: none;">
+                        <input type="radio" id="anxious" name="mood" value="anxious" onchange="showResult('anxious')" style="display: none;">
+                        <input type="radio" id="calm" name="mood" value="calm" onchange="showResult('calm')" style="display: none;">
+                        <input type="radio" id="confident" name="mood" value="confident" onchange="showResult('confident')" style="display: none;">
+                        <input type="radio" id="passionate" name="mood" value="passionate" onchange="showResult('passionate')" style="display: none;">
+                        <input type="radio" id="elegant" name="mood" value="elegant" onchange="showResult('elegant')" style="display: none;">
+
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <label for="happy">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">😊</span>
+                                    <span style="font-weight: 600;">Happy</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="excited">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🤩</span>
+                                    <span style="font-weight: 600;">Excited</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="surprised">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">😲</span>
+                                    <span style="font-weight: 600;">Surprised</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="anxious">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">😰</span>
+                                    <span style="font-weight: 600;">Anxious</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="calm">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">😌</span>
+                                    <span style="font-weight: 600;">Calm</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="confident">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">💪</span>
+                                    <span style="font-weight: 600;">Confident</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="passionate">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🔥</span>
+                                    <span style="font-weight: 600;">Passionate</span>
+                                </label>
+                            </div>
+
+                            <div class="quiz-option">
+                                <label for="elegant">
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 8px;">👑</span>
+                                    <span style="font-weight: 600;">Elegant</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="quiz-results" id="quiz-results-container" style="display: none; margin-top: 30px; padding: 30px; background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%); border-radius: 16px; text-align: center;">
+                            <p style="font-size: 1.5rem; margin-bottom: 10px;">✨ Perfect Match! ✨</p>
+                            <h4 id="result-name" style="font-size: 2rem; color: var(--primary); margin: 15px 0;">Rose Quartz</h4>
+                            <p id="result-desc" style="font-size: 1rem; color: var(--text-dark); line-height: 1.8; margin: 20px 0;">
+                                Your loving heart deserves this gentle beauty! Rose Quartz wraps you in warmth and compassion. 
+                                💝 Tip: Wear it close to your heart to amplify love and kindness throughout your day.
+                            </p>
+                            <a href="#" class="result-btn" style="display: inline-block; margin-top: 15px; padding: 12px 30px; background: var(--accent); color: white; border-radius: 25px; text-decoration: none; font-weight: 600;">Shop Now</a>
+                        </div>
+                    </div>
+
+                    <script>
+                        function showResult(mood) {
+                            const resultsContainer = document.getElementById('quiz-results-container');
+                            const resultName = document.getElementById('result-name');
+                            const resultDesc = document.getElementById('result-desc');
+                            
+                            const results = {
+                                happy: {
+                                    name: '🌸 Rose Quartz',
+                                    desc: 'Your happiness radiates warmth! Rose Quartz amplifies your joy and spreads love around you. 💝 Tip: Wear it to keep your heart open and share your happiness with others.'
+                                },
+                                excited: {
+                                    name: '💎 Topaz',
+                                    desc: 'Your excitement shines bright like gold! Topaz brings abundance and positive energy. ✨ Tip: Let its golden sparkle fuel your enthusiasm and bring your dreams to life.'
+                                },
+                                surprised: {
+                                    name: '🔮 Amethyst',
+                                    desc: 'Your sense of wonder deserves Amethyst\'s magic! This gem brings clarity and spiritual insight. 🧘 Tip: Wear it to embrace the unexpected and find wisdom in surprises.'
+                                },
+                                anxious: {
+                                    name: '🌿 Emerald',
+                                    desc: 'Your worries need Emerald\'s calming energy! This stone brings peace and grounding. 🌱 Tip: Hold it when you feel anxious to reconnect with nature\'s tranquility.'
+                                },
+                                calm: {
+                                    name: '🌙 Pearl',
+                                    desc: 'Your peaceful state is perfectly matched with Pearl\'s serenity! This gem brings inner harmony. 🌙 Tip: Wear it to maintain your calm and deepen your meditation practice.'
+                                },
+                                confident: {
+                                    name: '💠 Blue Sapphire',
+                                    desc: 'Your confidence deserves Blue Sapphire\'s noble strength! This gem enhances clarity and power. 💪 Tip: Wear it to boost your confidence and trust your inner wisdom.'
+                                },
+                                passionate: {
+                                    name: '💖 Ruby',
+                                    desc: 'Your passion ignites like Ruby\'s fiery glow! This stone amplifies courage and vitality. 🔥 Tip: Wear it boldly to embrace your power and pursue what you love.'
+                                },
+                                elegant: {
+                                    name: '🌺 Diamond',
+                                    desc: 'Your elegance shines like Diamond\'s brilliance! This gem represents timeless grace and strength. 👑 Tip: Wear it as a reminder of your unique beauty and invaluable worth.'
+                                }
+                            };
+                            
+                            resultName.textContent = results[mood].name;
+                            resultDesc.textContent = results[mood].desc;
+                            resultsContainer.style.display = 'block';
+                            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    </script>
+                </div>
+
+                <!-- Gemstone Grid - في الأسفل -->
+                <div class="gemstones-grid">
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">🌸</span>
+                        <h3 class="gemstone-name">Rose Quartz</h3>
+                        <p class="gemstone-benefit">Soft pastel pink crystal</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">💛</span>
+                        <h3 class="gemstone-name">Topaz</h3>
+                        <p class="gemstone-benefit">Warm golden yellow with sparkle</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">💜</span>
+                        <h3 class="gemstone-name">Amethyst</h3>
+                        <p class="gemstone-benefit">Stunning royal purple gem</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">💚</span>
+                        <h3 class="gemstone-name">Emerald</h3>
+                        <p class="gemstone-benefit">Rich green with brilliant sparkle</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">🤍</span>
+                        <h3 class="gemstone-name">Pearl</h3>
+                        <p class="gemstone-benefit">Lustrous white with soft glow</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">💙</span>
+                        <h3 class="gemstone-name">Blue Sapphire</h3>
+                        <p class="gemstone-benefit">Magnificent deep blue gem</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">❤️</span>
+                        <h3 class="gemstone-name">Ruby</h3>
+                        <p class="gemstone-benefit">Vibrant fiery red stone</p>
+                    </div>
+
+                    <div class="gemstone-item">
+                        <span class="gemstone-icon">💎</span>
+                        <h3 class="gemstone-name">Diamond</h3>
+                        <p class="gemstone-benefit">Most precious and brilliant gem</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Love & Healing</button>
+            <button class="filter-btn">Clarity & Focus</button>
+            <button class="filter-btn">Protection</button>
+            <button class="filter-btn">Abundance</button>
+            <button class="filter-btn">Chakra Balance</button>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-grid">
+        <div class="container">
+            <div class="grid grid-3">
+
+                <!-- Product 1 - Bracelet -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-rose-quartz.jpg" alt="Rose Quartz Bracelet" class="product-image">
+                        <span class="product-badge">Bestseller</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Bracelet</span>
+                        <h3 class="product-name">Eternal Love</h3>
+                        <p class="product-description">
+                            Genuine Rose Quartz beads with sterling silver heart charm. 
+                            A delicate bracelet that adds feminine elegance.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💗 Rose Quartz</span>
+                            <span class="property-tag">✨ Sterling Silver</span>
+                            <span class="property-tag">🌸 Handcrafted</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$89</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 - Ring -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-topaz.jpg" alt="Topaz Ring" class="product-image">
+                        <span class="product-badge">New Arrival</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Ring</span>
+                        <h3 class="product-name">Golden Radiance</h3>
+                        <p class="product-description">
+                            Premium Topaz stone set in gold-plated band. 
+                            A stunning statement ring with timeless appeal.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💛 Topaz</span>
+                            <span class="property-tag">✨ Gold Plated</span>
+                            <span class="property-tag">☀️ Radiant</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$95</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 - Necklace -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-amethyst.jpg" alt="Amethyst Necklace" class="product-image">
+                        <span class="product-badge">Limited Edition</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Necklace</span>
+                        <h3 class="product-name">Royal Purple</h3>
+                        <p class="product-description">
+                            Stunning Amethyst stones on delicate chain. 
+                            A vibrant necklace celebrating spiritual wisdom.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💜 Amethyst</span>
+                            <span class="property-tag">✨ Spiritual</span>
+                            <span class="property-tag">🔮 Mystical</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$120</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 - Pendant -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-emerald.jpg" alt="Emerald Pendant" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Pendant</span>
+                        <h3 class="product-name">Emerald Essence</h3>
+                        <p class="product-description">
+                            Rich Emerald crystal pendant on silver chain. 
+                            A bold and sophisticated accessory.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💚 Emerald</span>
+                            <span class="property-tag">🌿 Natural</span>
+                            <span class="property-tag">✨ Brilliant</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$78</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 - Bracelet -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-pearl.jpg" alt="Pearl Bracelet" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Bracelet</span>
+                        <h3 class="product-name">Luminous Pearl</h3>
+                        <p class="product-description">
+                            Lustrous Pearl crystals with silver accents. 
+                            A serene and elegant bracelet for everyday grace.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">🤍 Pearl</span>
+                            <span class="property-tag">✨ Lustrous</span>
+                            <span class="property-tag">🌙 Serene</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$105</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 - Ring -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-sapphire.jpg" alt="Blue Sapphire Ring" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Ring</span>
+                        <h3 class="product-name">Sapphire Serenity</h3>
+                        <p class="product-description">
+                            Magnificent Blue Sapphire stone in silver setting. 
+                            A serene ring with timeless elegance.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💙 Blue Sapphire</span>
+                            <span class="property-tag">✨ Noble</span>
+                            <span class="property-tag">💪 Confident</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$98</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 - Necklace -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-ruby.jpg" alt="Ruby Necklace" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Necklace</span>
+                        <h3 class="product-name">Passionate Fire</h3>
+                        <p class="product-description">
+                            Vibrant Ruby stones on gold chain. 
+                            A warm necklace with fiery, passionate energy.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">❤️ Ruby</span>
+                            <span class="property-tag">🔥 Vibrant</span>
+                            <span class="property-tag">💪 Bold</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$82</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 - Pendant -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-diamond.jpg" alt="Diamond Pendant" class="product-image">
+                        <span class="product-badge">Staff Pick</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Pendant</span>
+                        <h3 class="product-name">Timeless Brilliance</h3>
+                        <p class="product-description">
+                            Most precious Diamond on platinum chain. 
+                            A timeless pendant with unmatched brilliance.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">💎 Diamond</span>
+                            <span class="property-tag">👑 Elegant</span>
+                            <span class="property-tag">✨ Brilliant</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$92</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 9 - Bracelet -->
+                <div class="product-card fade-in">
+                    <div class="product-image-wrapper">
+                        <img src="images/bracelet-collection.jpg" alt="Mixed Gemstone Bracelet" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Bracelet</span>
+                        <h3 class="product-name">Harmony Collection</h3>
+                        <p class="product-description">
+                            Mixed gemstone collection on elastic band. 
+                            A beautiful bracelet combining all healing energies.
+                        </p>
+                        <div class="gemstone-properties">
+                            <span class="property-tag">🌈 Multi-Stone</span>
+                            <span class="property-tag">✨ Balanced</span>
+                            <span class="property-tag">💫 Unique</span>
+                        </div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="product-price-label">Price</span>
+                                <span class="product-price">$75</span>
+                            </div>
+                            <button class="btn-gemstone">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Bracelet CTA -->
+    <section class="section section-alt">
+        <div class="container text-center">
+            <h2 class="section-title">Can't Find What You're Looking For?</h2>
+            <p class="section-subtitle mb-lg">
+                Create your own unique bracelet with our customization tool. 
+                Choose your gemstones, charms, and size for a truly personal piece.
+            </p>
+            <button class="btn-gemstone"><a href="BraceletCustomization.html" style="color: inherit; text-decoration: none;">Customize Your Bracelet</a></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AURA ARTIFACTS</h3>
+                    <p>
+                        Handcrafted gemstone bracelets that harmonize your energy and elevate 
+                        your style. Made with love, intention, and sustainable practices.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="collections.html">Collections</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="#contact">Contact</a></p>
+                    <p><a href="admin-login-final.html">Admin Portal</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Customer Care</h3>
+                    <p><a href="#">Shipping & Returns</a></p>
+                    <p><a href="#">Size Guide</a></p>
+                    <p><a href="#">Care Instructions</a></p>
+                    <p><a href="#">FAQ</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p>Email: <a href="mailto:info@auraartifacts.com">info@auraartifacts.com</a></p>
+                    <p>Phone: +966 50 123 4567</p>
+                    <p>Instagram: @auraartifacts</p>
+                    <p>Follow us for daily inspiration ✨</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aura

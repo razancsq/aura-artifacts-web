@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aura Artifacts - Discover the beauty of natural gemstone bracelets. Handcrafted with love and sustainable practices.">
+    <meta name="keywords" content="gemstone bracelets, natural stones, luxury jewelry, sustainable jewelry, handcrafted jewelry">
+    <title>Aura Artifacts | Checkout</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════════════════════ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AURA ARTIFACTS</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="collections.html" class="nav-link">Collections</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="Accessibility.html" class="nav-link">Accessibility</a></li>
+                <li><a href="help.html" class="nav-link">Help</a></li>
+                <li><a href="SizeGuide.html" class="nav-link">Size Guide</a></li>
+                <li><a href="GemstoneMeanings.html" class="nav-link">Gemstone Meanings</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="admin-login-final.html" class="nav-link">Admin</a></li>
+                <li><a href="cart.html" class="nav-link">Cart</a></li>
+                <li><a href="checkout.html" class="nav-link active">Checkout</a></li>
+                <li><a href="order-confirmation.html" class="nav-link">Confirm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+<!-- Main Content -->
+<main class="cart-container">
+    <h1 class="text-center" style="margin-top: var(--space-xl);">Checkout</h1>
+    
+    <form action="order-confirmation.html" method="GET" class="checkout-wrapper">
+        <!-- Left Column: Forms -->
+        <div class="checkout-form">
+            
+            <!-- Contact Info -->
+            <div class="form-section">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="checkout-input" required placeholder="you@example.com">
+                </div>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="form-section">
+                <h3>Shipping Address</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" id="fname" name="fname" class="checkout-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" id="lname" name="lname" class="checkout-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" class="checkout-input" required placeholder="123 Jewelry Lane">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" class="checkout-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Zip Code</label>
+                        <input type="text" id="zip" name="zip" class="checkout-input" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="form-section">
+                <h3>Payment</h3>
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" name="card-name" class="checkout-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" name="card-number" class="checkout-input" placeholder="0000 0000 0000 0000" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expiry">Expiry</label>
+                        <input type="text" id="expiry" name="expiry" placeholder="MM/YY" class="checkout-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="123" class="checkout-input" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="cart-btn cart-btn-primary cart-btn-full">Place Order/ Confirm</button>
+        </div>
+
+        <!-- Right Column: Summary -->
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <div style="margin-bottom: var(--space-md);">
+                <div class="cart-item-info" style="margin-bottom: var(--space-sm);">
+                    <img src="https://plus.unsplash.com/premium_photo-1681276170598-8ad7feaf918e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Emerald Drop Earrings" class="cart-item-img" style="width: 60px; height: 60px;">
+                    <div>
+                        <h4 style="font-size: 1rem;">The Emerald Drop</h4>
+                        <p style="font-size: 0.8rem;">Qty: 1</p>
+                    </div>
+                </div>
+                <div class="cart-item-info">
+                    <img src="https://plus.unsplash.com/premium_photo-1681276170008-76db5a27dee9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Luminous Pearls" class="cart-item-img" style="width: 60px; height: 60px;">
+                    <div>
+                        <h4 style="font-size: 1rem;">Luminous Pearls</h4>
+                        <p style="font-size: 0.8rem;">Qty: 1</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- line -->
+            <div class="form-group" style="border-top: 1px solid var(--primary); padding-top: var(--space-sm);">
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>$184.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>$10.00</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span>$194.00</span>
+            </div>
+        </div>
+    </form>
+</main>
+
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AURA ARTIFACTS</h3>
+                <p>
+                    Handcrafted gemstone bracelets that elevate your style with natural beauty.
+                    Made with love, care, and sustainable practices.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="index.html">Home</a></p>
+                <p><a href="collections.html">Collections</a></p>
+                <p><a href="about.html">About Us</a></p>
+                <p><a href="#contact">Contact</a></p>
+                <p><a href="admin-login-final.html">Admin Portal</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Customer Care</h3>
+                <p><a href="#">Shipping & Returns</a></p>
+                <p><a href="#">Size Guide</a></p>
+                <p><a href="#">Care Instructions</a></p>
+                <p><a href="#">FAQ</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <p>Email: <a href="mailto:info@auraartifacts.com">info@auraartifacts.com</a></p>
+                <p>Phone: +966 50 123 4567</p>
+                <p>Instagram: @auraartifacts</p>
+                <p>Follow us for daily inspiration ✨</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aura</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
