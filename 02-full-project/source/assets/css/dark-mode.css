@@ -1,0 +1,508 @@
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE - Global Theme Override
+   Applied when [data-theme="dark"] is on <html>
+   ═══════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+    /* ═══ Dark Color Palette ═══ */
+    --primary: #E8E0D8;
+    --secondary: #2A1F2D;
+    --accent: #D4789C;
+    --accent-hover: #E088AC;
+    --turquoise: #5A9E96;
+    --turquoise-light: #3A6E68;
+    --highlight: #8B5A6E;
+    --cream: #1E1A20;
+    --butter-yellow: #3D3528;
+    --pure: #1A1520;
+    --text-dark: #E8E0D8;
+    --text-light: #A09898;
+}
+
+/* ═══ Body ═══ */
+[data-theme="dark"] body {
+    background: #121015;
+    color: #E8E0D8;
+}
+
+/* ═══ Navbar ═══ */
+[data-theme="dark"] .navbar {
+    background: rgba(18, 16, 21, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 120, 156, 0.15);
+}
+
+[data-theme="dark"] .logo {
+    color: #E8E0D8 !important;
+}
+
+[data-theme="dark"] .nav-link {
+    color: #C8C0B8 !important;
+}
+
+[data-theme="dark"] .nav-link:hover {
+    color: #D4789C !important;
+}
+
+[data-theme="dark"] .search-input {
+    color: #E8E0D8;
+    border-bottom-color: #5A4A5E;
+}
+
+[data-theme="dark"] .search-input::placeholder {
+    color: #6A5A6E;
+}
+
+[data-theme="dark"] .search-results,
+[data-theme="dark"] .menu-dropdown,
+[data-theme="dark"] .favorites-dropdown,
+[data-theme="dark"] #favorites-dropdown {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .search-item,
+[data-theme="dark"] .menu-item {
+    color: #C8C0B8 !important;
+    border-bottom-color: #2A2530 !important;
+}
+
+[data-theme="dark"] .search-item:hover,
+[data-theme="dark"] .menu-item:hover {
+    background: #252030 !important;
+}
+
+[data-theme="dark"] .search-item-name {
+    color: #E8E0D8 !important;
+}
+
+/* ═══ Sections ═══ */
+[data-theme="dark"] .collections-header,
+[data-theme="dark"] .gemstone-discovery,
+[data-theme="dark"] .filter-section,
+[data-theme="dark"] .section-alt,
+[data-theme="dark"] section,
+[data-theme="dark"] .featured-products {
+    background: #121015 !important;
+}
+
+[data-theme="dark"] .section-alt {
+    background: #1A1520 !important;
+}
+
+[data-theme="dark"] .gemstone-discovery {
+    background: #1A1520 !important;
+}
+
+/* ═══ Feature Cards (Why Choose Aura) ═══ */
+[data-theme="dark"] .feature-card {
+    background: #1E1A22 !important;
+    border: 1px solid rgba(212, 120, 156, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .feature-card:hover {
+    border-color: rgba(212, 120, 156, 0.25);
+    box-shadow: 0 8px 30px rgba(212, 120, 156, 0.12);
+}
+
+[data-theme="dark"] .feature-title {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .feature-description {
+    color: #A09898;
+}
+
+/* ═══ Collection Cards (Featured Collections) ═══ */
+[data-theme="dark"] .collection-card {
+    background: #1E1A22 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .collection-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .collection-title {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .collection-description {
+    color: #A09898;
+}
+
+[data-theme="dark"] .collection-button {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .collection-button:hover {
+    color: #D4AF37;
+}
+
+/* ═══ Cards ═══ */
+[data-theme="dark"] .card,
+[data-theme="dark"] .product-card {
+    background: #1E1A22;
+    border: 1px solid rgba(212, 120, 156, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .product-card:hover {
+    box-shadow: 0 8px 30px rgba(212, 120, 156, 0.15);
+    border-color: rgba(212, 120, 156, 0.25);
+}
+
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .card-price {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .card-description {
+    color: #A09898;
+}
+
+[data-theme="dark"] .card-image-wrapper {
+    background: #252030;
+}
+
+/* ═══ Badges ═══ */
+[data-theme="dark"] .badge {
+    background: #2A1F2D;
+    color: #D4789C;
+    border: 1px solid rgba(212, 120, 156, 0.3);
+}
+
+[data-theme="dark"] .product-badge {
+    background: #D4789C !important;
+    color: #fff !important;
+}
+
+/* ═══ Buttons ═══ */
+[data-theme="dark"] .btn-gemstone {
+    background: #D4789C;
+    color: #fff;
+    border-color: #D4789C;
+}
+
+[data-theme="dark"] .btn-gemstone:hover {
+    background: #E088AC;
+    box-shadow: 0 4px 20px rgba(212, 120, 156, 0.3);
+}
+
+/* ═══ Filter Buttons ═══ */
+[data-theme="dark"] .filter-btn {
+    background: #1E1A22;
+    border-color: #2A2530;
+    color: #C8C0B8;
+}
+
+[data-theme="dark"] .filter-btn:hover {
+    background: #252030;
+    border-color: #D4789C;
+    color: #D4789C;
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: #D4789C;
+    border-color: #D4789C;
+    color: #fff;
+}
+
+[data-theme="dark"] .filter-section {
+    background: #121015 !important;
+    border-bottom-color: rgba(212, 120, 156, 0.1) !important;
+}
+
+/* ═══ Quiz ═══ */
+[data-theme="dark"] .quiz-box {
+    background: linear-gradient(135deg, #3A1F30 0%, #1A3A35 100%);
+}
+
+[data-theme="dark"] .quiz-option {
+    background: rgba(30, 26, 34, 0.85);
+    border-color: rgba(212, 120, 156, 0.2);
+}
+
+[data-theme="dark"] .quiz-option:hover {
+    background: rgba(42, 31, 45, 0.9);
+    border-color: rgba(212, 120, 156, 0.5);
+}
+
+[data-theme="dark"] .quiz-option label span {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .quiz-title {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .quiz-subtitle {
+    color: #A09898;
+}
+
+[data-theme="dark"] .quiz-start-btn {
+    background: rgba(30, 26, 34, 0.8);
+    border-color: #E8E0D8;
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .quiz-start-btn:hover {
+    background: #E8E0D8;
+    color: #1A1520;
+}
+
+[data-theme="dark"] .quiz-results {
+    background: linear-gradient(135deg, #2A1F2D 0%, #1A3A35 100%);
+}
+
+/* ═══ Property Tags ═══ */
+[data-theme="dark"] .property-tag {
+    background: #252030;
+    color: #D4789C;
+    border: 1px solid rgba(212, 120, 156, 0.2);
+}
+
+/* ═══ Footer ═══ */
+[data-theme="dark"] .footer {
+    background: #0D0A10 !important;
+    border-top: 1px solid rgba(212, 120, 156, 0.1);
+}
+
+[data-theme="dark"] .footer h3 {
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] .footer p,
+[data-theme="dark"] .footer a {
+    color: #A09898;
+}
+
+[data-theme="dark"] .footer a:hover {
+    color: #D4789C;
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(212, 120, 156, 0.1);
+}
+
+/* ═══ Forms ═══ */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background: #1E1A22;
+    color: #E8E0D8;
+    border-color: #2A2530;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+    border-color: #D4789C;
+}
+
+[data-theme="dark"] label {
+    color: #C8C0B8;
+}
+
+/* ═══ Product Detail ═══ */
+[data-theme="dark"] .product-gallery-section,
+[data-theme="dark"] .product-info-section {
+    background: #121015;
+}
+
+[data-theme="dark"] .gallery-main-image {
+    background: #1E1A22;
+}
+
+[data-theme="dark"] .thumbnail {
+    background: #1E1A22;
+    border-color: #2A2530;
+}
+
+[data-theme="dark"] .thumbnail.active {
+    border-color: #D4789C;
+}
+
+/* ═══ Cart ═══ */
+[data-theme="dark"] .cart-item {
+    background: #1E1A22;
+    border-color: rgba(212, 120, 156, 0.1);
+}
+
+/* ═══ Hero Section ═══ */
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #1A1520 0%, #0D1A1D 50%, #1A1520 100%);
+}
+
+/* ═══ Scrollbar ═══ */
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 8px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #121015;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #3A2F45;
+    border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #D4789C;
+}
+
+/* ═══ Toast Notifications ═══ */
+[data-theme="dark"] .toast {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.2) !important;
+    color: #E8E0D8 !important;
+}
+
+/* ═══ Tables ═══ */
+[data-theme="dark"] table {
+    background: #1E1A22;
+}
+
+[data-theme="dark"] th {
+    background: #252030;
+    color: #E8E0D8;
+}
+
+[data-theme="dark"] td {
+    border-color: #2A2530;
+    color: #C8C0B8;
+}
+
+[data-theme="dark"] tr:hover td {
+    background: #252030;
+}
+
+/* ═══ Currency Converter Widget ═══ */
+[data-theme="dark"] .currency-widget {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.2) !important;
+}
+
+/* ═══ Dark Mode Toggle Button ═══ */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    padding: 5px 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(212, 120, 156, 0.5));
+}
+
+/* ═══ Smooth Transition ═══ */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] *:not(.highlight-word) {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ═══ Bracelet Customization ═══ */
+[data-theme="dark"] .customizer-section {
+    background: #121015;
+}
+
+[data-theme="dark"] .charm-grid img,
+[data-theme="dark"] .bracelet-preview {
+    background: #1E1A22;
+    border-color: #2A2530;
+}
+
+/* ═══ Auth Pages (Login/Register) ═══ */
+[data-theme="dark"] .auth-container,
+[data-theme="dark"] .form-container {
+    background: #1E1A22;
+    border-color: rgba(212, 120, 156, 0.1);
+}
+
+/* ═══ Contact & Generic Forms ═══ */
+[data-theme="dark"] .contact-form {
+    background: #1E1A22 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ═══ Generic Page Sections with white bg ═══ */
+[data-theme="dark"] .page-header,
+[data-theme="dark"] .content-section,
+[data-theme="dark"] .order-card,
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .cart-summary,
+[data-theme="dark"] .checkout-form {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.1) !important;
+}
+
+/* ═══ About Page ═══ */
+[data-theme="dark"] .about-section,
+[data-theme="dark"] .team-card,
+[data-theme="dark"] .value-card {
+    background: #1E1A22 !important;
+}
+
+/* ═══ Help / Accessibility / Size Guide ═══ */
+[data-theme="dark"] .help-section,
+[data-theme="dark"] .accessibility-section,
+[data-theme="dark"] .size-guide-section,
+[data-theme="dark"] .gemstone-section {
+    background: #121015 !important;
+}
+
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .guide-card,
+[data-theme="dark"] .meaning-card,
+[data-theme="dark"] .accessibility-card {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.1) !important;
+}
+
+/* ═══ Order Confirmation / History ═══ */
+[data-theme="dark"] .confirmation-card,
+[data-theme="dark"] .order-item,
+[data-theme="dark"] .order-details {
+    background: #1E1A22 !important;
+    border-color: rgba(212, 120, 156, 0.1) !important;
+}
+
+/* ═══ Login / Register ═══ */
+[data-theme="dark"] .login-card,
+[data-theme="dark"] .register-card {
+    background: #1E1A22 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ═══ Catch-all for inline white backgrounds ═══ */
+[data-theme="dark"] [style*="background: white"],
+[data-theme="dark"] [style*="background:#fff"],
+[data-theme="dark"] [style*="background: #fff"],
+[data-theme="dark"] [style*="background-color: white"],
+[data-theme="dark"] [style*="background:#FFFFFF"],
+[data-theme="dark"] [style*="background: #FFFFFF"] {
+    background: #1E1A22 !important;
+}
+
+/* ═══ Highlight Word (gradient text) ═══ */
+html[data-theme="dark"] span.highlight-word {
+    background: linear-gradient(135deg, #FF4D8D, #00E5CC) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+    transition: none !important;
+}

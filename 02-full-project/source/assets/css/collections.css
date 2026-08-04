@@ -1,0 +1,201 @@
+/* ═══════════════════════════════════════════════════════════
+   COLLECTIONS PAGE - Extracted Styles
+   Quiz, Filter, Discovery Section
+   ═══════════════════════════════════════════════════════════ */
+
+/* --- Gemstone Discovery Section --- */
+.gemstone-discovery {
+    padding: 60px 0;
+    background: #FAFAFA;
+}
+
+.discovery-header h2 {
+    margin-bottom: 10px;
+}
+
+.discovery-header p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 40px;
+}
+
+.discovery-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* --- Quiz Box --- */
+.quiz-box {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--turquoise) 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--primary);
+}
+
+.quiz-start { text-align: center; }
+
+.quiz-title {
+    font-family: var(--font-subheading);
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.quiz-subtitle {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+.quiz-start-btn {
+    font-size: 1rem;
+    padding: 14px 40px;
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 30px;
+    color: var(--primary);
+    font-family: var(--font-button);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.quiz-start-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 62, 80, 0.3);
+}
+
+/* --- Quiz Options Grid --- */
+.quiz-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.quiz-option {
+    background: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    overflow: hidden;
+}
+
+.quiz-option label {
+    display: block;
+    padding: 15px 8px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.quiz-option label span {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--primary);
+}
+
+.quiz-option:hover {
+    background: var(--secondary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 158, 187, 0.25);
+}
+
+/* --- Quiz Results --- */
+.quiz-results {
+    margin-top: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--turquoise-light) 100%);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.quiz-match-label {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.quiz-results h4 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin: 15px 0;
+}
+
+.quiz-results p#result-desc {
+    font-size: 1rem;
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+/* --- Filter Section --- */
+.filter-section {
+    padding: 30px 0;
+    background: white;
+    position: sticky;
+    top: 60px;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.filter-btn {
+    padding: 10px 24px;
+    border: 2px solid var(--secondary);
+    border-radius: 25px;
+    background: white;
+    color: var(--primary);
+    font-family: var(--font-button);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent);
+    background: var(--secondary);
+    color: var(--accent);
+}
+
+.filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 158, 187, 0.3);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .quiz-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .filter-container {
+        gap: 8px;
+    }
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.75rem;
+    }
+}
