@@ -747,7 +747,7 @@
 
                 <!-- Pagination -->
                 <div class="pagination" role="navigation" aria-label="Table pagination">
-                    <span class="page-info" id="page-info">Showing 1–8 of 8 products</span>
+                    <span class="page-info" id="page-info">Showing 1-8 of 8 products</span>
                     <div class="page-btns">
                         <button class="page-btn" aria-label="Previous page" disabled>‹</button>
                         <button class="page-btn active" aria-current="page">1</button>
@@ -863,7 +863,7 @@
             );
 
             renderTable(filteredProducts);
-            document.getElementById('page-info').textContent = `Showing 1–${filteredProducts.length} of ${filteredProducts.length} products`;
+            document.getElementById('page-info').textContent = `Showing 1-${filteredProducts.length} of ${filteredProducts.length} products`;
         }
 
         function rowClick(e, id) { /* could navigate to edit page */ }
